@@ -1,0 +1,56 @@
+<svg width="600" height="150" viewBox="0 0 600 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes shift {
+      0%, 100% { stop-color: #FF003C; }
+      50% { stop-color: #0070FF; }
+    }
+
+    /* THE SNAPPY ZIP ANIMATION */
+    @keyframes zip-node {
+      0%, 45% { transform: translateX(0); opacity: 1; }
+      50% { transform: translateX(100px); opacity: 0; } /* Zip out right */
+      51%, 95% { transform: translateX(-100px); opacity: 0; } /* Reset left */
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes zip-aswanth {
+      0%, 45% { transform: translateX(-100px); opacity: 0; } /* Wait left */
+      50%, 95% { transform: translateX(0); opacity: 1; }     /* Snap center */
+      100% { transform: translateX(100px); opacity: 0; }     /* Zip out right */
+    }
+
+    .nitro-text {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-weight: 900;
+      font-style: italic;
+      fill: url(#g);
+      transform-origin: center;
+      letter-spacing: -1px;
+      font-size: 80px;
+      /* Fixed tilt so it doesn't wobble */
+      transform: skewX(-10deg);
+      filter: drop-shadow(0 0 8px rgba(255, 0, 60, 0.4));
+    }
+
+    .node-x { animation: zip-node 6s infinite cubic-bezier(0.23, 1, 0.32, 1); }
+    .aswanth { animation: zip-aswanth 6s infinite cubic-bezier(0.23, 1, 0.32, 1); }
+
+    #s1 { animation: shift 2s infinite linear; }
+    #s2 { animation: shift 2s infinite linear -1s; }
+  </style>
+
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop id="s1" offset="0%" />
+      <stop id="s2" offset="100%" />
+    </linearGradient>
+  </defs>
+  
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="nitro-text node-x">
+    NodeX-AR
+  </text>
+  
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="nitro-text aswanth">
+    Aswanth R
+  </text>
+</svg>
