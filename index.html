@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeX-AR | System Breaker • Code Fixer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background: #0a0a0a;
+            color: #00ff41;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Matrix Rain Effect Background */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.15;
+        }
+
+        /* Glitch Overlay */
+        .glitch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 65, 0.03) 0px,
+                rgba(0, 255, 65, 0.03) 2px,
+                transparent 2px,
+                transparent 6px
+            );
+            pointer-events: none;
+            z-index: 999;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header-section {
+            text-align: center;
+            padding: 40px 0 20px;
+            border-bottom: 2px solid #00ff41;
+            margin-bottom: 50px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .header-section img {
+            max-width: 100%;
+            filter: drop-shadow(0 0 20px #00ff41);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            color: #00ff41;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 1px solid #00ff41;
+            position: relative;
+            transition: all 0.3s;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #00ff41;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s;
+            z-index: -1;
+        }
+
+        .nav-item:hover {
+            color: #0a0a0a;
+        }
+
+        .nav-item:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Hero Stats */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 50px 0;
+        }
+
+        .stat-card {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid #00ff41;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            font-family: 'Orbitron', monospace;
+            text-shadow: 0 0 10px #00ff41;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: #ccc;
+        }
+
+        /* Terminal Window */
+        .terminal {
+            background: #0a0a0a;
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            margin: 40px 0;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .terminal-header {
+            background: #00ff41;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #0a0a0a;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .terminal-line {
+            margin: 10px 0;
+        }
+
+        .prompt {
+            color: #00ff41;
+            font-weight: bold;
+        }
+
+        .command {
+            color: #fff;
+        }
+
+        .output {
+            color: #888;
+            margin-left: 20px;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .skill-card {
+            background: rgba(0, 255, 65, 0.03);
+            border: 1px solid #00ff41;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+            transition: top 0.5s;
+        }
+
+        .skill-card:hover::before {
+            top: 100%;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .skill-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .project-card {
+            background: rgba(0, 255, 65, 0.03);
+            border: 1px solid #00ff41;
+            padding: 25px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', monospace;
+            color: #00ff41;
+        }
+
+        .project-desc {
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .project-tech {
+            display: inline-block;
+            background: rgba(0, 255, 65, 0.2);
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            margin: 5px 5px 0 0;
+            border-left: 2px solid #00ff41;
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #00ff41;
+            text-decoration: none;
+            border-bottom: 1px solid #00ff41;
+        }
+
+        .project-link:hover {
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        /* Glitch Text Effect */
+        .glitch-text {
+            font-size: 2rem;
+            font-weight: bold;
+            font-family: 'Orbitron', monospace;
+            position: relative;
+            text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75);
+            animation: glitch 0.3s infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75); }
+            14% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75); }
+            15% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.05em 0 rgba(0, 255, 0, 0.75); }
+            49% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.05em 0 rgba(0, 255, 0, 0.75); }
+            50% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75); }
+            99% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75); }
+            100% { text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.025em 0 rgba(0, 255, 0, 0.75); }
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 50px 0;
+        }
+
+        .contact-card {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid #00ff41;
+            padding: 20px 40px;
+            text-align: center;
+            text-decoration: none;
+            color: #00ff41;
+            transition: all 0.3s;
+        }
+
+        .contact-card:hover {
+            background: #00ff41;
+            color: #0a0a0a;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px #00ff41;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #00ff41;
+            margin-top: 50px;
+            font-size: 0.8rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2.5rem;
+            font-family: 'Orbitron', monospace;
+            margin: 50px 0 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '< ';
+            color: #00ff41;
+        }
+
+        .section-title::after {
+            content: ' />';
+            color: #00ff41;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            .glitch-text {
+                font-size: 1.2rem;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Matrix Canvas Background -->
+<canvas id="matrix-bg"></canvas>
+<div class="glitch-overlay"></div>
+
+<div class="container">
+    <!-- Header with your SVG -->
+    <div class="header-section">
+        <img src="header.svg" alt="NodeX-AR" onerror="this.src='https://via.placeholder.com/600x150?text=NodeX-AR'">
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#home" class="nav-item">$ cd ~/home</a>
+        <a href="#skills" class="nav-item">$ cat skills</a>
+        <a href="#contact" class="nav-item">$ ./contact.sh</a>
+    </nav>
+
+    <!-- Hero Stats -->
+    <div class="hero-stats">
+        <div class="stat-card">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">CONTRIBUTIONS</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">30+</div>
+            <div class="stat-label">ACTIVE REPOS</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">50000+</div>
+            <div class="stat-label">LINES FIXED</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">1500+</div>
+            <div class="stat-label">SYSTEM BREACH</div>
+        </div>
+    </div>
+
+    <!-- Terminal Section -->
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+        </div>
+        <div class="terminal-body">
+            <div class="terminal-line">
+                <span class="prompt">$</span>
+                <span class="command"> whoami</span>
+            </div>
+            <div class="output">> ASWANTH R // NodeX-AR</div>
+            <div class="output">> Python Dev & Ethical Hacker</div>
+            <div class="output">> "If it's code, I can fix it."</div>
+            
+            <div class="terminal-line">
+                <span class="prompt">$</span>
+                <span class="command"> cat bio.txt</span>
+            </div>
+            <div class="output">> I deconstruct systems and edit any language.</div>
+            <div class="output">> Currently focusing on cybersecurity & AI development.</div>
+            <div class="output">> Status: <span class="glitch-text">🎯 FOCUSING</span></div>
+            
+            <div class="terminal-line">
+                <span class="prompt">$</span>
+                <span class="command"> echo "System Status: ACTIVE"</span>
+            </div>
+            <div class="output">>> System Status: <span style="color:#00ff41">ACTIVE</span> <span class="cursor">_</span></div>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2 class="section-title">SKILL_MATRIX</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">🐍</div>
+                <div class="skill-title">PYTHON</div>
+                <div>Advanced • Automation • Security Tools</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🔓</div>
+                <div class="skill-title">ETHICAL HACKING</div>
+                <div>Pen Testing • System Deconstruction</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🌐</div>
+                <div class="skill-title">WEB TECH</div>
+                <div>JavaScript • HTML5 • CSS3</div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">CONNECT_NOW</h2>
+        <div class="contact-grid">
+            <a href="https://github.com/Nodex-AR" target="_blank" class="contact-card">
+                <div style="font-size: 2rem;">🐙</div>
+                <div>GITHUB</div>
+                <small>@NodeX-AR</small>
+            </a>
+            <a href="#" class="contact-card" onclick="alert('Email: aswanthr82@gamil.com (protected)'); return false;">
+                <div style="font-size: 2rem;">📧</div>
+                <div>SECURE_MSG</div>
+                <small>Encrypted Channel</small>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div>═══════════════════════════════════════</div>
+        <div>NODEX-AR // SYSTEM BREACHER // CODE FIXER</div>
+        <div>═══════════════════════════════════════</div>
+        <div style="margin-top: 10px;">{ "status": "active", "message": "If it's code, I can fix it." }</div>
+        <div style="margin-top: 10px; font-size: 0.7rem;">© 2025 // ACCESS GRANTED</div>
+    </footer>
+</div>
+
+<script>
+    // Matrix Rain Effect
+    const canvas = document.getElementById('matrix-bg');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const chars = '010000010101110101010001010100010101000101010101000101010';
+    const charArray = chars.split('');
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+    
+    for(let i = 0; i < columns; i++) {
+        drops[i] = 1;
+    }
+    
+    function draw() {
+        ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#00ff41';
+        ctx.font = fontSize + 'px monospace';
+        
+        for(let i = 0; i < drops.length; i++) {
+            const text = charArray[Math.floor(Math.random() * charArray.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            
+            if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+    
+    setInterval(draw, 50);
+    
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+    
+    // Glitch effect on hover for titles
+    document.querySelectorAll('.section-title').forEach(title => {
+        title.addEventListener('mouseover', () => {
+            title.style.animation = 'glitch 0.2s infinite';
+            setTimeout(() => {
+                title.style.animation = '';
+            }, 500);
+        });
+    });
+</script>
+
+</body>
+</html>
