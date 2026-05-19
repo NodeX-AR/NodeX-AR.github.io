@@ -74,9 +74,21 @@
             box-shadow: 0 0 18px rgba(0, 255, 65, 0.2);
         }
 
+        /* FIXED: Responsive header image - adjusts perfectly on mobile */
         .logo-svg {
-            max-width: 280px;
-            width: 90%;
+            max-width: min(100%, 280px);
+            width: auto;
+            height: auto;
+            filter: drop-shadow(0 0 12px #00ff41);
+            display: inline-block;
+        }
+        
+        /* Fallback image styling if broken src */
+        .header-section img {
+            max-width: min(90%, 280px);
+            width: auto;
+            height: auto;
+            display: inline-block;
             filter: drop-shadow(0 0 12px #00ff41);
         }
 
@@ -317,6 +329,13 @@
             .prompt { font-size: 0.75rem; }
             .section-title { font-size: 1.5rem; }
             .stat-number { font-size: 1.4rem; }
+            /* extra safety for header on small devices */
+            .header-section img {
+                max-width: 85%;
+            }
+            .logo-svg {
+                max-width: 85%;
+            }
         }
         .glitch-text-small {
             animation: glitchFlash 0.2s ease;
@@ -334,7 +353,8 @@
 
 <div class="container">
      <div class="header-section">
-        <img src="header.svg" alt="NodeX-AR" onerror="this.src='https://via.placeholder.com/600x150?text=NodeX-AR'">
+        <!-- Fixed responsive header: img scales with container, maintains aspect ratio on mobile -->
+        <img src="header.svg" alt="NodeX-AR" class="logo-svg" style="max-width: min(100%, 280px); width: auto; height: auto;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 600 150\'%3E%3Crect width=\'600\' height=\'150\' fill=\'%230a0a0a\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'monospace\' font-size=\'32\' fill=\'%2300ff41\'%3ENodeX-AR%3C/text%3E%3C/svg%3E';">
     </div>
 
     <nav>
@@ -484,7 +504,7 @@
         else if (raw === 'contact') {
             addOutput(`>  CONNECTION CHANNELS:<br>  ● GitHub: https://github.com/Nodex-AR<br>  ● Secure Mail: aswanthr82@gamil.com (PGP enabled)<br>  `);
         }
-        else if ('sudo' in raw) {
+        else if (raw.includes('sudo')) {
             addOutput(`Command : '${escapeHtml(cmd)}' is not available yet!.`, true);
         }
         else if (raw === 'clear') {
@@ -613,6 +633,19 @@
         e.stopPropagation();
         termInput.focus();
     });
+    
+    // Extra: ensure header image never overflows on any device orientation
+    function enforceResponsiveLogo() {
+        const headerImg = document.querySelector('.header-section img');
+        if (headerImg) {
+            const maxWidth = Math.min(window.innerWidth * 0.85, 280);
+            headerImg.style.maxWidth = maxWidth + 'px';
+            headerImg.style.width = 'auto';
+            headerImg.style.height = 'auto';
+        }
+    }
+    enforceResponsiveLogo();
+    window.addEventListener('resize', enforceResponsiveLogo);
 </script>
 </body>
 </html>
