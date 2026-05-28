@@ -13,7 +13,12 @@
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://a-r.is-a.dev/favicon-48x48.png</image:loc>
-      <image:title>NodeX-AR Favicon</image:title>
+      <image:title>NodeX-AR Favicon 48x48</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://a-r.is-a.dev/aswanth-r-nodex-ar.jpg</image:loc>
+      <image:title>Aswanth R - NodeX-AR Portfolio Owner</image:title>
+      <image:caption>Professional portrait of Aswanth R, Ethical Hacker and Code Fixer</image:caption>
     </image:image>
   </url>
   
@@ -66,6 +71,14 @@
     <lastmod>2026-05-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  
+  <!-- ========== PERSONAL PHOTO (STANDALONE ENTRY) ========== -->
+  <url>
+    <loc>https://a-r.is-a.dev/aswanth-r-nodex-ar.jpg</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   
   <!-- ========== HEADER SVG (BRANDING) ========== -->
