@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Aswanth R | NodeX-AR</title>
-  <meta name="description" content="NodeX-AR | Aswanth R - Ethical Hacker, Python Developer. Music-reactive 3D portfolio.">
+  <title>Aswanth R | NodeX-AR • audio-reactive 3D</title>
+  <meta name="description" content="NodeX-AR | Aswanth R - Ethical Hacker, Python Developer. Bass-reactive 3D portfolio with intense scaling.">
   <meta name="author" content="Aswanth R (NodeX-AR)">
   
-  <!-- Favicons (using your actual files) -->
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -273,11 +273,11 @@
   import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
   import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-  // --- 3D SCENE ---
+  // --- 3D SCENE SETUP ---
   const container = document.getElementById('canvas-container');
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x03030c);
-  scene.fog = new THREE.FogExp2(0x03030c, 0.02);
+  scene.fog = new THREE.FogExp2(0x03030c, 0.022);
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.set(0, 1.6, 16);
   const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -286,9 +286,9 @@
   container.appendChild(renderer.domElement);
   
   const renderScene = new RenderPass(scene, camera);
-  const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
-  bloomPass.threshold = 0;
-  bloomPass.strength = 0.8;
+  const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.4, 0.4, 0.85);
+  bloomPass.threshold = 0.05;
+  bloomPass.strength = 0.9;
   const composer = new EffectComposer(renderer);
   composer.addPass(renderScene);
   composer.addPass(bloomPass);
@@ -297,64 +297,89 @@
   controls.enableDamping = true;
   controls.enableZoom = false;
   controls.autoRotate = true;
-  controls.autoRotateSpeed = 0.65;
+  controls.autoRotateSpeed = 0.7;
   
-  // Core geometry
-  const coreGeo = new THREE.IcosahedronGeometry(1.6, 1);
-  const coreMat = new THREE.MeshStandardMaterial({ color: 0x00ff41, roughness: 0.25, metalness: 0.7, emissive: 0x00ff41, emissiveIntensity: 0.55 });
+  // --- MAIN CORE: highly reactive geometric shape (scales dramatically with bass)
+  const coreGeo = new THREE.IcosahedronGeometry(1.4, 1);
+  const coreMat = new THREE.MeshStandardMaterial({ 
+    color: 0x00ff41, 
+    roughness: 0.22, 
+    metalness: 0.8, 
+    emissive: 0x00ff41, 
+    emissiveIntensity: 0.65 
+  });
   const core = new THREE.Mesh(coreGeo, coreMat);
   scene.add(core);
   
-  // Wireframe cage
-  const cageGeo = new THREE.IcosahedronGeometry(2.05, 1);
-  const cageMat = new THREE.MeshBasicMaterial({ color: 0x88ff88, wireframe: true, transparent: true, opacity: 0.25 });
+  // Wireframe cage (scales slightly)
+  const cageGeo = new THREE.IcosahedronGeometry(1.9, 1);
+  const cageMat = new THREE.MeshBasicMaterial({ color: 0xaaffaa, wireframe: true, transparent: true, opacity: 0.3 });
   const cage = new THREE.Mesh(cageGeo, cageMat);
   scene.add(cage);
   
-  // Particle ring
-  const particleCount = 90;
+  // --- Secondary particles: orbital ring with pulsating behavior
+  const particleCount = 130;
   const particleGeo = new THREE.BufferGeometry();
   const particlePositions = new Float32Array(particleCount * 3);
   for (let i = 0; i < particleCount; i++) {
     const angle = (i / particleCount) * Math.PI * 2;
-    particlePositions[i*3] = Math.cos(angle) * 4.8;
-    particlePositions[i*3+1] = Math.sin(angle) * 4.8;
+    particlePositions[i*3] = Math.cos(angle) * 5.2;
+    particlePositions[i*3+1] = Math.sin(angle) * 5.2;
+    particlePositions[i*3+2] = Math.sin(angle * 2) * 0.8;
   }
   particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-  const particleMat = new THREE.PointsMaterial({ size: 0.12, color: 0x00ff88, blending: THREE.AdditiveBlending });
+  const particleMat = new THREE.PointsMaterial({ size: 0.13, color: 0x44ff88, blending: THREE.AdditiveBlending });
   const particlesRing = new THREE.Points(particleGeo, particleMat);
   scene.add(particlesRing);
   
-  // Grid and stars
-  const gridHelper = new THREE.GridHelper(32, 28, 0x33ff66, 0x226622);
-  gridHelper.position.y = -3.5;
+  // Floating ambient particles (extra)
+  const dustCount = 800;
+  const dustGeo = new THREE.BufferGeometry();
+  const dustPos = new Float32Array(dustCount * 3);
+  for (let i = 0; i < dustCount; i++) {
+    dustPos[i*3] = (Math.random() - 0.5) * 28;
+    dustPos[i*3+1] = (Math.random() - 0.5) * 18;
+    dustPos[i*3+2] = (Math.random() - 0.5) * 25 - 12;
+  }
+  dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+  const dustMat = new THREE.PointsMaterial({ color: 0x88aaff, size: 0.05, transparent: true, opacity: 0.5 });
+  const dustField = new THREE.Points(dustGeo, dustMat);
+  scene.add(dustField);
+  
+  // Grid floor
+  const gridHelper = new THREE.GridHelper(28, 24, 0x33ff66, 0x226622);
+  gridHelper.position.y = -3.8;
   scene.add(gridHelper);
   
+  // Starfield background
   const starsGeo = new THREE.BufferGeometry();
-  const starsCount = 1800;
+  const starsCount = 2200;
   const starsPos = new Float32Array(starsCount * 3);
   for (let i = 0; i < starsCount; i++) {
-    starsPos[i*3] = (Math.random() - 0.5) * 200;
-    starsPos[i*3+1] = (Math.random() - 0.5) * 100;
-    starsPos[i*3+2] = (Math.random() - 0.5) * 80 - 40;
+    starsPos[i*3] = (Math.random() - 0.5) * 240;
+    starsPos[i*3+1] = (Math.random() - 0.5) * 120;
+    starsPos[i*3+2] = (Math.random() - 0.5) * 90 - 45;
   }
   starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPos, 3));
-  const starsMat = new THREE.PointsMaterial({ color: 0xaaccff, size: 0.07, transparent: true, opacity: 0.7 });
+  const starsMat = new THREE.PointsMaterial({ color: 0xbbddff, size: 0.08, transparent: true, opacity: 0.7 });
   const starsField = new THREE.Points(starsGeo, starsMat);
   scene.add(starsField);
   
-  // --- AUDIO ENGINE: strong reactivity to bg.mp3 ---
+  // --- AUDIO ENGINE: BASS-DRIVEN DRAMATIC SCALING ---
   let audioCtx = null;
   let analyser = null;
   let sourceNode = null;
   let isPlaying = false;
   let musicBuffer = null;
+  let bassSmoothing = 0.0;    // smoothed bass intensity for buttery reactivity
+  let lastIntensity = 0.25;
   
   function initAudioContext() {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (!analyser) {
       analyser = audioCtx.createAnalyser();
       analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.2;
     }
     return audioCtx;
   }
@@ -362,51 +387,66 @@
   async function loadMusic() {
     try {
       const response = await fetch('bg.mp3');
-      if (!response.ok) throw new Error();
+      if (!response.ok) throw new Error('not found');
       const arrayBuffer = await response.arrayBuffer();
       const ctx = initAudioContext();
       musicBuffer = await ctx.decodeAudioData(arrayBuffer);
       return true;
     } catch (err) {
-      console.log('bg.mp3 not found – using ambient synth');
+      console.log('bg.mp3 not found - using enhanced pulse synth with lively reactivity');
       return false;
     }
   }
   
+  // Ambient synth with TREMOLO (volume modulation) to simulate rhythmic bass pulses
   function startAmbientSynth() {
     if (!audioCtx) initAudioContext();
     if (audioCtx.state === 'suspended') audioCtx.resume();
-    if (sourceNode) { try { sourceNode.stop(); } catch(e) {} sourceNode = null; }
+    if (sourceNode && sourceNode.stop) { try { sourceNode.stop(); } catch(e) {} }
     
-    const osc1 = audioCtx.createOscillator();
-    const osc2 = audioCtx.createOscillator();
-    const masterGain = audioCtx.createGain();
+    const oscLow = audioCtx.createOscillator();
+    const oscMid = audioCtx.createOscillator();
     const filter = audioCtx.createBiquadFilter();
     filter.type = 'lowpass';
-    filter.frequency.value = 750;
-    filter.Q.value = 6;
-    masterGain.gain.value = 0.28;
-    osc1.type = 'sine';
-    osc1.frequency.value = 76.0;
-    osc2.type = 'triangle';
-    osc2.frequency.value = 152.0;
-    osc1.connect(filter);
-    osc2.connect(filter);
+    filter.frequency.value = 380;
+    filter.Q.value = 5;
+    
+    const masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.32;
+    
+    // Tremolo LFO for volume pulsation -> strong beat-driven scaling even without mp3
+    const tremoloLFO = audioCtx.createOscillator();
+    const tremoloGain = audioCtx.createGain();
+    tremoloLFO.frequency.value = 2.15;   // 129 BPM feel
+    tremoloGain.gain.value = 0.22;
+    tremoloLFO.connect(tremoloGain);
+    tremoloGain.connect(masterGain.gain);
+    tremoloLFO.start();
+    
+    oscLow.type = 'sine';
+    oscLow.frequency.value = 68;
+    oscMid.type = 'triangle';
+    oscMid.frequency.value = 136;
+    
+    oscLow.connect(filter);
+    oscMid.connect(filter);
     filter.connect(masterGain);
     masterGain.connect(analyser);
     analyser.connect(audioCtx.destination);
-    osc1.start();
-    osc2.start();
     
-    const lfo = audioCtx.createOscillator();
-    const lfoGain = audioCtx.createGain();
-    lfo.frequency.value = 0.45;
-    lfoGain.gain.value = 10;
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc1.frequency);
-    lfo.start();
+    oscLow.start();
+    oscMid.start();
     
-    sourceNode = { stop: () => { osc1.stop(); osc2.stop(); lfo.stop(); } };
+    // Extra subtle bass modulation using LFO on filter
+    const filterLFO = audioCtx.createOscillator();
+    const filterLfoGain = audioCtx.createGain();
+    filterLFO.frequency.value = 1.8;
+    filterLfoGain.gain.value = 65;
+    filterLFO.connect(filterLfoGain);
+    filterLfoGain.connect(filter.frequency);
+    filterLFO.start();
+    
+    sourceNode = { stop: () => { oscLow.stop(); oscMid.stop(); tremoloLFO.stop(); filterLFO.stop(); } };
     isPlaying = true;
     document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
   }
@@ -440,40 +480,85 @@
       if (musicBuffer) startCustomMusic();
       else startAmbientSynth();
     }
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-  }
-  
-  function getAudioIntensity() {
-    if (isPlaying && analyser && audioCtx?.state === 'running') {
-      const data = new Uint8Array(analyser.frequencyBinCount);
-      analyser.getByteFrequencyData(data);
-      let sum = 0;
-      for (let i = 0; i < data.length; i++) sum += data[i];
-      let raw = sum / (data.length * 255);
-      return Math.min(1.0, Math.max(0.2, raw * 1.5));
-    } else {
-      // gentle idle movement
-      return 0.25 + Math.sin(Date.now() * 0.002) * 0.1;
-    }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
   }
   
   document.getElementById('audioControl').addEventListener('click', toggleMusic);
   
-  // Auto-start on first interaction
-  window.addEventListener('click', async () => {
-    if (!audioCtx) {
-      initAudioContext();
-      await loadMusic();
-      if (musicBuffer) startCustomMusic();
-      else startAmbientSynth();
-    } else if (audioCtx.state === 'suspended' && !isPlaying) {
-      audioCtx.resume();
-      if (musicBuffer) startCustomMusic();
-      else startAmbientSynth();
+  // BASS-INTENSITY detection (focus on low frequencies 20-150Hz)
+  function getBassIntensity() {
+    if (!isPlaying || !analyser || !audioCtx || audioCtx.state !== 'running') {
+      // Idle gentle throbbing to show life even without music
+      return 0.28 + Math.sin(Date.now() * 0.0035) * 0.12;
     }
-  }, { once: true });
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(dataArray);
+    // Use lowest ~1/4 bins (bass region)
+    const bassBins = Math.floor(dataArray.length * 0.28);
+    let sum = 0;
+    for (let i = 1; i < bassBins; i++) {
+      sum += dataArray[i];
+    }
+    let raw = sum / (bassBins * 255);
+    // aggressive curve to pop on strong bass hits
+    let intensity = Math.pow(Math.min(1.0, raw * 1.7), 1.2);
+    intensity = Math.min(0.98, Math.max(0.22, intensity));
+    // smoothing for buttery animation
+    bassSmoothing = bassSmoothing * 0.5 + intensity * 0.5;
+    return Math.min(0.98, bassSmoothing);
+  }
   
-  // ---------- SCROLL CONTENT (crossfade) ----------
+  // --- STRONG REACTIVITY: SCALE, GLOW, COLOR, RING ---
+  function applyAudioReactivity() {
+    const bass = getBassIntensity();
+    // Map bass to dramatic scale (1.0 → up to 1.85x)
+    const scaleFactor = 1.0 + bass * 0.88;
+    // core.scale changes drastically based on bass
+    core.scale.setScalar(scaleFactor);
+    // Cage also expands but slightly less
+    cage.scale.setScalar(1.0 + bass * 0.45);
+    
+    // Color shift: green -> intense cyan (bass makes it hotter)
+    const hue = 120 - bass * 38;   // 120° green to 82° electric cyan
+    const saturation = 0.9;
+    const lightness = 0.55 + bass * 0.35;
+    coreMat.color.setHSL(hue / 360, saturation, lightness);
+    coreMat.emissive.setHSL(hue / 360, 1.0, 0.6 + bass * 0.6);
+    coreMat.emissiveIntensity = 0.55 + bass * 1.4;
+    
+    // Bloom strength: explosive glow on drops
+    bloomPass.strength = 0.7 + bass * 1.7;
+    
+    // Particle ring size & color: intense pulsation
+    particleMat.size = 0.12 + bass * 0.22;
+    particleMat.color.setHSL(0.32 + bass * 0.12, 1.0, 0.6);
+    particlesRing.rotation.z += 0.012 + bass * 0.025;
+    
+    // Auto-rotation speed: faster with energy
+    controls.autoRotateSpeed = 0.55 + bass * 1.2;
+    
+    // Fog density floats with intensity
+    scene.fog.density = 0.018 + bass * 0.018;
+    
+    // Grid intensity via emissive look? just small additional flair
+    if (bass > 0.6) {
+      gridHelper.material.color.setHex(0x99ff99);
+    } else {
+      gridHelper.material.color.setHex(0x33ff66);
+    }
+    
+    // dust field subtle motion
+    dustField.rotation.y += 0.002;
+    dustField.rotation.x = bass * 0.1;
+    
+    // core rotation: extra twist
+    core.rotation.x += 0.005;
+    core.rotation.y += 0.007 + bass * 0.01;
+    cage.rotation.x = core.rotation.x;
+    cage.rotation.y = core.rotation.y;
+  }
+  
+  // --- SCROLL CONTENT CROSSFADE (same elegant behavior)---
   const scenesData = [
     { 
       id: 'hero',
@@ -571,47 +656,32 @@
         }});
       }
       starsField.rotation.y = progress * 0.6;
+      dustField.rotation.z = progress * 0.3;
     }
   });
   
-  // --- STRONG MUSIC REACTIVITY: color, scale, particles, bloom, rotation ---
-  function reactToAudio() {
-    const intensity = getAudioIntensity();
-    
-    // Core: scale, color, emissive glow
-    const scaleCore = 1 + intensity * 0.22;
-    core.scale.setScalar(scaleCore);
-    cage.scale.setScalar(1 + intensity * 0.12);
-    
-    // Color shift from green to cyan/white
-    const hue = 120 - intensity * 40; // 120° green → 80° cyan
-    const saturation = 1.0;
-    const lightness = 0.5 + intensity * 0.3;
-    coreMat.color.setHSL(hue / 360, saturation, lightness);
-    coreMat.emissive.setHSL(hue / 360, saturation, 0.7);
-    coreMat.emissiveIntensity = 0.4 + intensity * 1.2;
-    
-    // Bloom (glow)
-    bloomPass.strength = 0.7 + intensity * 1.4;
-    
-    // Particles: size and color
-    particleMat.size = 0.12 + intensity * 0.15;
-    particleMat.color.setHSL(0.35 + intensity * 0.1, 1.0, 0.6);
-    
-    // Rotation speed
-    controls.autoRotateSpeed = 0.5 + intensity * 1.2;
-    
-    // Slight fog variation
-    scene.fog.density = 0.02 + intensity * 0.012;
-  }
-  
+  // --- GLOBAL ANIMATION LOOP: MUSIC REACTIVITY + RENDER ---
   function animate() {
     requestAnimationFrame(animate);
-    reactToAudio();
-    controls.update();
+    applyAudioReactivity();
+    controls.update(); // updates auto-rotate if enabled
     composer.render();
   }
   animate();
+  
+  // Auto-start on first user interaction to comply with browser policies + ensure audio plays
+  window.addEventListener('click', async () => {
+    if (!audioCtx) {
+      initAudioContext();
+      await loadMusic();
+      if (musicBuffer) startCustomMusic();
+      else startAmbientSynth();
+    } else if (audioCtx.state === 'suspended' && !isPlaying) {
+      audioCtx.resume();
+      if (musicBuffer) startCustomMusic();
+      else startAmbientSynth();
+    }
+  }, { once: true });
   
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -619,6 +689,9 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     composer.setSize(window.innerWidth, window.innerHeight);
   });
+  
+  // Additional indicator: if bg.mp3 is present, show subtle console message but user sees dramatic scaling anyway
+  console.log('🎧 Audio-reactive 3D | Bass drives core scaling up to 1.85x!');
 </script>
 </body>
 </html>
