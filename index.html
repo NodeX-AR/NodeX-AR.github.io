@@ -311,16 +311,16 @@
   const cage = new THREE.Mesh(cageGeo, cageMat);
   scene.add(cage);
   
-  // Particle ring (will expand/contract with music)
+  // Particle ring
   const particleCount = 90;
   const particleGeo = new THREE.BufferGeometry();
-  const initialParticlePositions = new Float32Array(particleCount * 3);
+  const particlePositions = new Float32Array(particleCount * 3);
   for (let i = 0; i < particleCount; i++) {
     const angle = (i / particleCount) * Math.PI * 2;
-    initialParticlePositions[i*3] = Math.cos(angle) * 4.8;
-    initialParticlePositions[i*3+1] = Math.sin(angle) * 4.8;
+    particlePositions[i*3] = Math.cos(angle) * 4.8;
+    particlePositions[i*3+1] = Math.sin(angle) * 4.8;
   }
-  particleGeo.setAttribute('position', new THREE.BufferAttribute(initialParticlePositions.slice(), 3));
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
   const particleMat = new THREE.PointsMaterial({ size: 0.12, color: 0x00ff88, blending: THREE.AdditiveBlending });
   const particlesRing = new THREE.Points(particleGeo, particleMat);
   scene.add(particlesRing);
@@ -343,7 +343,7 @@
   const starsField = new THREE.Points(starsGeo, starsMat);
   scene.add(starsField);
   
-  // --- AUDIO ENGINE: strong shape reactivity ---
+  // --- AUDIO ENGINE: strong reactivity to bg.mp3 ---
   let audioCtx = null;
   let analyser = null;
   let sourceNode = null;
@@ -376,7 +376,7 @@
   function startAmbientSynth() {
     if (!audioCtx) initAudioContext();
     if (audioCtx.state === 'suspended') audioCtx.resume();
-    if (sourceNode && sourceNode.stop) sourceNode.stop();
+    if (sourceNode) { try { sourceNode.stop(); } catch(e) {} sourceNode = null; }
     
     const osc1 = audioCtx.createOscillator();
     const osc2 = audioCtx.createOscillator();
@@ -450,9 +450,10 @@
       let sum = 0;
       for (let i = 0; i < data.length; i++) sum += data[i];
       let raw = sum / (data.length * 255);
-      return Math.min(1.0, Math.max(0.15, raw * 1.8));
+      return Math.min(1.0, Math.max(0.2, raw * 1.5));
     } else {
-      return 0.25 + Math.sin(Date.now() * 0.0025) * 0.12;
+      // gentle idle movement
+      return 0.25 + Math.sin(Date.now() * 0.002) * 0.1;
     }
   }
   
@@ -472,43 +473,136 @@
     }
   }, { once: true });
   
-  // --- STRONG SHAPE REACTIVITY (scale, particle radius, glow) ---
+  // ---------- SCROLL CONTENT (crossfade) ----------
+  const scenesData = [
+    { 
+      id: 'hero',
+      html: `
+        <div class="hero-flex">
+          <img src="/aswanth-r-nodex-ar.png" alt="Aswanth R" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?background=0D1117&color=00ff41&bold=true&size=140&name=ASWANTH+R'">
+          <div class="hero-content">
+            <div class="badge">✦ ETHICAL HACKER / PYTHON DEV</div>
+            <h1>Breaking <span class="gradient-text">systems</span><br>fixing <span class="gradient-text">code</span></h1>
+            <p class="desc">ISC2 Candidate · Penetration testing · Python automation · Code fixer. 1000+ contributions.</p>
+            <div class="quote">“If it’s code, I can fix it.” — Aswanth R</div>
+          </div>
+        </div>
+      `
+    },
+    {
+      id: 'stats',
+      html: `
+        <h2 class="gradient-text" style="font-size:2rem; margin-bottom:1rem;">Impact & Metrics</h2>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-number">1,250+</div><div class="stat-label">CONTRIBUTIONS</div></div>
+          <div class="stat-card"><div class="stat-number">34+</div><div class="stat-label">ACTIVE REPOS</div></div>
+          <div class="stat-card"><div class="stat-number">58K+</div><div class="stat-label">LINES FIXED</div></div>
+          <div class="stat-card"><div class="stat-number">1.8K+</div><div class="stat-label">BREACHES PATCHED</div></div>
+        </div>
+        <div class="quote" style="margin-top:1.5rem;">Every line of code tells a story of resilience & precision.</div>
+      `
+    },
+    {
+      id: 'skills',
+      html: `
+        <h2 class="gradient-text" style="font-size:2rem; margin-bottom:1rem;">Cyber Arsenal</h2>
+        <div class="skills-grid">
+          <div class="skill-card"><i class="fab fa-python skill-icon"></i><div class="skill-title">PYTHON</div><div>Advanced • Automation • Exploit Dev</div></div>
+          <div class="skill-card"><i class="fas fa-lock skill-icon"></i><div class="skill-title">ETHICAL HACKING</div><div>Pen Testing • Reverse Engineering</div></div>
+          <div class="skill-card"><i class="fas fa-globe skill-icon"></i><div class="skill-title">WEB TECH</div><div>JS/HTML/CSS • React • Node.js</div></div>
+          <div class="skill-card"><i class="fas fa-bolt skill-icon"></i><div class="skill-title">CODE FIXER</div><div>Debug • Refactor • Optimize</div></div>
+        </div>
+      `
+    },
+    {
+      id: 'contact',
+      html: `
+        <h2 class="gradient-text" style="font-size:2rem; margin-bottom:1rem;">Connect Securely</h2>
+        <div class="contact-links">
+          <a href="https://github.com/Nodex-AR" target="_blank" class="contact-link"><i class="fab fa-github"></i> GitHub/Nodex-AR</a>
+          <a href="#" id="secureEmailBtn" class="contact-link"><i class="fas fa-envelope"></i> Secure Message</a>
+        </div>
+        <div class="quote" style="margin-top:1.5rem;">Let’s build something unbreakable together.</div>
+      `
+    }
+  ];
+  
+  const layerA = document.getElementById('sceneLayerA');
+  const layerB = document.getElementById('sceneLayerB');
+  let activeLayer = 'A';
+  let currentSceneIdx = 0;
+  
+  function setSceneContent(layer, html) {
+    layer.innerHTML = html;
+    const emailBtn = layer.querySelector('#secureEmailBtn');
+    if (emailBtn) {
+      emailBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigator.clipboard.writeText('aswanthr82@gmail.com');
+        const btn = e.currentTarget;
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(() => btn.innerHTML = original, 1500);
+      });
+    }
+  }
+  
+  setSceneContent(layerA, scenesData[0].html);
+  layerA.classList.add('active');
+  
+  ScrollTrigger.create({
+    trigger: '.scroll-tracker',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1.0,
+    onUpdate: (self) => {
+      const progress = self.progress;
+      const targetIdx = Math.min(Math.floor(progress * scenesData.length), scenesData.length - 1);
+      if (targetIdx !== currentSceneIdx) {
+        currentSceneIdx = targetIdx;
+        const activeElem = activeLayer === 'A' ? layerA : layerB;
+        const inactiveElem = activeLayer === 'A' ? layerB : layerA;
+        setSceneContent(inactiveElem, scenesData[currentSceneIdx].html);
+        gsap.to(activeElem, { duration: 0.45, opacity: 0, onComplete: () => {
+          activeElem.classList.remove('active');
+          inactiveElem.classList.add('active');
+          gsap.to(inactiveElem, { duration: 0.45, opacity: 1 });
+          activeLayer = activeLayer === 'A' ? 'B' : 'A';
+        }});
+      }
+      starsField.rotation.y = progress * 0.6;
+    }
+  });
+  
+  // --- STRONG MUSIC REACTIVITY: color, scale, particles, bloom, rotation ---
   function reactToAudio() {
     const intensity = getAudioIntensity();
     
-    // Core scales dramatically (1.0 → 1.45)
-    const coreScale = 1 + intensity * 0.45;
-    core.scale.setScalar(coreScale);
-    cage.scale.setScalar(1 + intensity * 0.25);
+    // Core: scale, color, emissive glow
+    const scaleCore = 1 + intensity * 0.22;
+    core.scale.setScalar(scaleCore);
+    cage.scale.setScalar(1 + intensity * 0.12);
     
-    // Color shift: green to cyan/white
-    const hue = 120 - intensity * 45;
-    const sat = 1.0;
-    const light = 0.5 + intensity * 0.35;
-    coreMat.color.setHSL(hue / 360, sat, light);
-    coreMat.emissive.setHSL(hue / 360, sat, 0.7);
-    coreMat.emissiveIntensity = 0.4 + intensity * 1.3;
+    // Color shift from green to cyan/white
+    const hue = 120 - intensity * 40; // 120° green → 80° cyan
+    const saturation = 1.0;
+    const lightness = 0.5 + intensity * 0.3;
+    coreMat.color.setHSL(hue / 360, saturation, lightness);
+    coreMat.emissive.setHSL(hue / 360, saturation, 0.7);
+    coreMat.emissiveIntensity = 0.4 + intensity * 1.2;
     
-    // Bloom strength (glow)
-    bloomPass.strength = 0.6 + intensity * 1.6;
+    // Bloom (glow)
+    bloomPass.strength = 0.7 + intensity * 1.4;
     
-    // Particles: size and ring radius (shape change)
-    particleMat.size = 0.12 + intensity * 0.2;
-    // Expand/contract particle ring radius based on intensity
-    const positions = particlesRing.geometry.attributes.position.array;
-    for (let i = 0; i < particleCount; i++) {
-      const angle = (i / particleCount) * Math.PI * 2;
-      const radius = 4.8 + intensity * 2.2;
-      positions[i*3] = Math.cos(angle) * radius;
-      positions[i*3+1] = Math.sin(angle) * radius;
-    }
-    particlesRing.geometry.attributes.position.needsUpdate = true;
+    // Particles: size and color
+    particleMat.size = 0.12 + intensity * 0.15;
+    particleMat.color.setHSL(0.35 + intensity * 0.1, 1.0, 0.6);
     
-    // Rotation speed increases with beat
-    controls.autoRotateSpeed = 0.5 + intensity * 1.3;
+    // Rotation speed
+    controls.autoRotateSpeed = 0.5 + intensity * 1.2;
     
-    // Fog density (subtle)
-    scene.fog.density = 0.02 + intensity * 0.015;
+    // Slight fog variation
+    scene.fog.density = 0.02 + intensity * 0.012;
   }
   
   function animate() {
