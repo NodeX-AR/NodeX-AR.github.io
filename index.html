@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Aswanth R | NodeX-AR — Ethical Hacker & Python Developer</title>
+  <title>Aswanth R | NodeX-AR</title>
   
-  <!-- SEO META TAGS (unchanged) -->
+  <!-- SEO META TAGS -->
   <meta name="google-site-verification" content="wdF0k-MYoScdAzPf5TVDV4u540VXLTKu7phhcvnCnKc" />
-  <meta name="description" content="NodeX-AR | Aswanth R - System Breaker, Ethical Hacker, Code Fixer. 1000+ contributions, Python exploit dev, penetration testing.">
+  <meta name="description" content="NodeX-AR | Aswanth R - System Breaker, Ethical Hacker, Code Fixer. 1000+ contributions, Python exploit dev, penetration testing. Music‑reactive diagonal wave portfolio.">
   <meta name="keywords" content="NodeX-AR, Aswanth R, ethical hacker, code fixer, penetration testing, cybersecurity, Python developer">
   <meta name="author" content="Aswanth R (NodeX-AR)">
   <meta name="robots" content="index, follow">
   <meta property="og:title" content="NodeX-AR | Aswanth R - Ethical Hacker & Code Fixer">
   <meta property="og:image" content="https://a-r.is-a.dev/aswanth-r-nodex-ar.png">
-  <meta property="og:description" content="Music‑reactive diagonal wave portfolio. Ethical hacking & Python development.">
+  <meta property="og:description" content="Diagonal wave visualizer, music‑reactive portfolio. Ethical hacking & Python development.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://a-r.is-a.dev">
   <link rel="canonical" href="https://a-r.is-a.dev">
@@ -26,7 +26,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   
-  <!-- Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -65,9 +64,11 @@
     }
     .content { position: relative; z-index: 10; }
     
+    /* custom cursor */
     .cursor-dot { width: 6px; height: 6px; background: #00ff41; border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; mix-blend-mode: difference; }
     .cursor-follower { width: 32px; height: 32px; border: 1px solid rgba(0,255,65,0.6); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
     
+    /* navigation */
     .nav { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); width: calc(100% - 48px); max-width: 1280px; background: rgba(8,8,18,0.7); backdrop-filter: blur(18px); border-radius: 80px; padding: 0.7rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 100; border: 1px solid rgba(255,255,255,0.08); font-family: 'Space Grotesk', monospace; }
     .logo { font-size: 1.4rem; font-weight: 600; background: linear-gradient(135deg, #fff, #00ff41); background-clip: text; -webkit-background-clip: text; color: transparent; }
     .nav-links { display: flex; gap: 2rem; }
@@ -107,6 +108,31 @@
     .contact-card:hover { background: #00ff41; color: #0a0a0a; transform: scale(0.97); }
     footer { text-align: center; padding: 25px; border-top: 1px solid #00ff41; margin-top: 45px; font-size: 0.7rem; }
     
+    /* Play/Pause button (bottom-right) */
+    .audio-control {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(0, 255, 65, 0.85);
+      backdrop-filter: blur(8px);
+      border: none;
+      color: #0a0a12;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .audio-control:hover {
+      transform: scale(1.05);
+      background: #00ff41;
+    }
+    
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
       .hero h1 { font-size: 2.8rem; }
@@ -125,7 +151,7 @@
 
 <div class="content">
   <nav class="nav">
-    <a href="#" class="logo">NODEX-AR</a>
+    <a href="#" class="logo">Aswanth R</a>
     <div class="nav-links">
       <a href="#stats">WORK</a>
       <a href="#skills">SKILLS</a>
@@ -137,7 +163,7 @@
     <section class="hero">
       <div class="hero-grid">
         <div>
-          <div class="hero-badge">✦ ETHICAL HACKER / PYTHON DEV</div>
+          <div class="hero-badge">ETHICAL HACKER / PYTHON DEV</div>
           <h1>Breaking <span class="accent">systems</span><br>fixing <span class="accent">code</span></h1>
           <p class="hero-desc">ISC2 Candidate · Penetration testing · Python automation · Code fixer. 1000+ contributions.</p>
           <div class="btn-group">
@@ -185,8 +211,13 @@
   </div>
 </div>
 
+<!-- Play/Pause button -->
+<button id="audioControl" class="audio-control" aria-label="Play/Pause music">
+  <i class="fas fa-play"></i>
+</button>
+
 <script>
-  // ---------- DIAGONAL WAVE VISUALIZER (REAL MUSIC REACTIVE) ----------
+  // ---------- DIAGONAL WAVE VISUALIZER + AUDIO HANDLING ----------
   const canvas = document.getElementById('wave-canvas');
   const ctx = canvas.getContext('2d');
   let width, height;
@@ -200,18 +231,21 @@
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
   
-  // Audio state
+  // Audio globals
   let audioContext = null;
   let analyser = null;
   let source = null;
-  let audioElement = null;
-  let isAudioActive = false;
+  let audioBuffer = null;
+  let isPlaying = false;
   let freqData = new Uint8Array(128);
   let fallbackIntensity = 0;
+  let currentSourceNode = null;
+  let animationId = null;
   
-  // Simulated beat before user interaction
+  // Simulated beat (fallback)
+  let lastTimestamp = 0;
   function updateFallbackIntensity(now) {
-    const bpm = 128;
+    const bpm = 130;
     const period = 60 / bpm;
     const phase = (now % period) / period;
     let kick = Math.max(0, 1 - phase * 6) * 0.8;
@@ -221,62 +255,133 @@
     return fallbackIntensity;
   }
   
-  // Start audio on first user interaction (click, touch, scroll)
-  let interactionHandled = false;
-  function startAudioOnInteraction() {
-    if (interactionHandled) return;
-    interactionHandled = true;
-    
-    // Create AudioContext and Analyser
+  // Load and decode bg.mp3
+  async function loadAudioBuffer() {
+    if (audioBuffer) return audioBuffer;
+    try {
+      const response = await fetch('bg.mp3');
+      if (!response.ok) throw new Error('bg.mp3 not found');
+      const arrayBuffer = await response.arrayBuffer();
+      if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      return audioBuffer;
+    } catch (err) {
+      console.warn('Failed to load bg.mp3, will use fallback beat only', err);
+      return null;
+    }
+  }
+  
+  // Start playback (called by user gesture or button)
+  async function startPlayback() {
+    if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioContext.state === 'suspended') await audioContext.resume();
+    if (audioBuffer) {
+      // Stop any existing source
+      if (currentSourceNode) {
+        try { currentSourceNode.stop(); } catch(e) {}
+        currentSourceNode = null;
+      }
+      const newSource = audioContext.createBufferSource();
+      newSource.buffer = audioBuffer;
+      newSource.loop = true;
+      newSource.connect(analyser);
+      analyser.connect(audioContext.destination);
+      newSource.start();
+      currentSourceNode = newSource;
+      isPlaying = true;
+      document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
+    } else {
+      // fallback only, no real audio
+      isPlaying = true;
+      document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
+    }
+  }
+  
+  function stopPlayback() {
+    if (currentSourceNode) {
+      try { currentSourceNode.stop(); } catch(e) {}
+      currentSourceNode = null;
+    }
+    isPlaying = false;
+    document.getElementById('audioControl').innerHTML = '<i class="fas fa-play"></i>';
+  }
+  
+  function togglePlayback() {
+    if (isPlaying) {
+      stopPlayback();
+    } else {
+      startPlayback();
+    }
+  }
+  
+  // Initial setup: create analyser but no playback yet
+  function initAudio() {
+    if (audioContext) return;
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     analyser = audioContext.createAnalyser();
     analyser.fftSize = 256;
     freqData = new Uint8Array(analyser.frequencyBinCount);
-    
-    audioElement = new Audio('bg.mp3');
-    audioElement.loop = true;
-    audioElement.crossOrigin = "anonymous";
-    audioElement.addEventListener('canplaythrough', () => {
-      if (!analyser) return;
-      if (source) try { source.disconnect(); } catch(e) {}
-      source = audioContext.createMediaElementSource(audioElement);
-      source.connect(analyser);
-      analyser.connect(audioContext.destination);
-      isAudioActive = true;
-      audioElement.play().catch(e => console.log("play failed", e));
-    });
-    audioElement.addEventListener('error', () => {
-      console.log('bg.mp3 not found – using fallback beat');
-      isAudioActive = false;
-    });
-    audioElement.load();
-    
-    audioContext.resume().then(() => {
-      if (audioElement && audioElement.src) {
-        audioElement.play().catch(e => console.log("play blocked (user interaction missing?)", e));
-      }
-    }).catch(e => console.log("AudioContext resume failed", e));
-    
-    // Remove all listeners after first interaction
-    window.removeEventListener('click', startAudioOnInteraction);
-    window.removeEventListener('touchstart', startAudioOnInteraction);
-    window.removeEventListener('scroll', startAudioOnInteraction);
+    // Preload buffer but don't play until user interaction or button
+    loadAudioBuffer();
+    // Keep AudioContext suspended initially – will resume on first interaction or button click
   }
   
-  // Attach to multiple interaction types
-  window.addEventListener('click', startAudioOnInteraction);
-  window.addEventListener('touchstart', startAudioOnInteraction);
-  window.addEventListener('scroll', startAudioOnInteraction);
+  // Auto-start on first user interaction (scroll, click, touch) – complies with autoplay policies
+  let interactionHandled = false;
+  function autoStartOnInteraction() {
+    if (interactionHandled) return;
+    interactionHandled = true;
+    initAudio();
+    // Resume context and start playback only if not already playing
+    if (audioContext && audioContext.state === 'suspended') {
+      audioContext.resume().then(() => {
+        startPlayback();
+      }).catch(e => console.log('AudioContext resume failed', e));
+    } else {
+      startPlayback();
+    }
+    // Remove listeners after first interaction
+    window.removeEventListener('scroll', autoStartOnInteraction);
+    window.removeEventListener('click', autoStartOnInteraction);
+    window.removeEventListener('touchstart', autoStartOnInteraction);
+  }
   
-  // Draw waves (called every frame)
-  function draw(now) {
+  window.addEventListener('scroll', autoStartOnInteraction);
+  window.addEventListener('click', autoStartOnInteraction);
+  window.addEventListener('touchstart', autoStartOnInteraction);
+  
+  // Button manual control
+  const audioBtn = document.getElementById('audioControl');
+  audioBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!interactionHandled) {
+      // First click: initialize and start
+      interactionHandled = true;
+      initAudio();
+      if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume().then(() => startPlayback());
+      } else {
+        startPlayback();
+      }
+      // Remove auto listeners
+      window.removeEventListener('scroll', autoStartOnInteraction);
+      window.removeEventListener('click', autoStartOnInteraction);
+      window.removeEventListener('touchstart', autoStartOnInteraction);
+    } else {
+      togglePlayback();
+    }
+  });
+  
+  // ---------- DRAWING LOOP (diagonal waves, reactive to real or simulated intensity) ----------
+  let time = 0;
+  function drawWaves(now) {
     if (!ctx) return;
     ctx.clearRect(0, 0, width, height);
     
     let intensity = 0;
     let freqColorShift = 0;
     
-    if (isAudioActive && analyser && audioContext && audioContext.state === 'running') {
+    if (isPlaying && analyser && audioContext && audioContext.state === 'running') {
       analyser.getByteFrequencyData(freqData);
       let sum = 0;
       let weightedSum = 0;
@@ -286,7 +391,7 @@
       }
       if (sum > 0) {
         intensity = sum / (freqData.length * 255);
-        intensity = Math.min(1, intensity * 1.3);
+        intensity = Math.min(1, intensity * 1.2);
         const avgFreq = weightedSum / (sum * freqData.length);
         freqColorShift = avgFreq;
       } else {
@@ -344,9 +449,9 @@
     ctx.fillRect(0, 0, width, height);
   }
   
-  function animate(t) {
+  function animate(timestamp) {
     const now = performance.now() / 1000;
-    draw(now);
+    drawWaves(now);
     requestAnimationFrame(animate);
   }
   requestAnimationFrame(animate);
