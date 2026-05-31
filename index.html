@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Aswanth R | NodeX-AR — Pure Audio Reactive</title>
-  <meta name="description" content="NodeX-AR | Aswanth R - Ethical Hacker, Python Developer. Music‑driven 3D scene with cinematic scroll.">
+  <title>Aswanth R | NodeX-AR </title>
+  <meta name="description" content="NodeX-AR | Aswanth R - Ethical Hacker, Python Developer.">
   <meta name="author" content="Aswanth R (NodeX-AR)">
   <link rel="icon" type="image/png" sizes="48x48" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ff41'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E">
   
@@ -38,14 +38,13 @@
       height: 100%;
       z-index: 0;
     }
-    /* scroll tracker – 4 scenes */
     .scroll-tracker {
       position: relative;
       height: 300vh;
       z-index: 1;
       pointer-events: none;
     }
-    /* fixed glass panel – elegant rounded corners, will become transparent after hero */
+    /* NO ROUNDED BOX – completely transparent container for text */
     .fixed-content {
       position: fixed;
       top: 50%;
@@ -55,33 +54,21 @@
       max-width: 1000px;
       z-index: 20;
       text-align: center;
-      background: rgba(5, 5, 12, 0.65);
-      backdrop-filter: blur(16px);
-      border-radius: 1.5rem;
-      padding: 2rem 2rem;
-      border: 1px solid rgba(0, 255, 65, 0.25);
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
-      pointer-events: auto;
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.6);
-    }
-    /* after first scene, panel becomes invisible (transparent) */
-    .fixed-content.transparent-panel {
       background: transparent;
-      backdrop-filter: blur(0px);
+      backdrop-filter: none;
       border: none;
-      box-shadow: none;
       border-radius: 0;
-      padding: 2rem 2rem; /* keep padding to avoid layout shift */
-      transition: all 0.4s ease;
+      padding: 2rem 2rem;
+      pointer-events: auto;
+      transition: none;
     }
-    /* crossfade layers */
     .scene-layer {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      padding: 0.25rem;
+      padding: 0.5rem;
       opacity: 0;
       transition: opacity 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       pointer-events: none;
@@ -94,11 +81,11 @@
       opacity: 1;
       pointer-events: auto;
     }
-    /* hero alignment - original style preserved */
+    /* refined text alignment */
     .hero-flex {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 2.5rem;
       flex-wrap: wrap;
       justify-content: center;
       text-align: left;
@@ -110,11 +97,12 @@
       object-fit: cover;
       border: 2.5px solid #00ff41;
       box-shadow: 0 0 20px rgba(0,255,65,0.3);
+      background: #0a0a0a;
     }
     .hero-content {
       text-align: left;
       flex: 1;
-      min-width: 240px;
+      min-width: 260px;
     }
     .badge {
       font-size: 0.7rem;
@@ -142,17 +130,16 @@
       margin-bottom: 1.25rem;
       line-height: 1.4;
     }
-    /* stats & skills grids */
     .stats-grid, .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 1.25rem;
-      margin-top: 1.5rem;
+      margin: 1.8rem auto 0;
       width: 100%;
     }
     .stat-card, .skill-card {
-      background: rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(0, 255, 65, 0.25);
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(0, 255, 65, 0.35);
       border-radius: 1.25rem;
       padding: 1.2rem 0.8rem;
       transition: 0.2s ease;
@@ -161,7 +148,7 @@
     }
     .stat-card:hover, .skill-card:hover {
       border-color: #00ff41;
-      background: rgba(0, 255, 65, 0.05);
+      background: rgba(0, 255, 65, 0.1);
       transform: translateY(-2px);
     }
     .stat-number {
@@ -175,7 +162,7 @@
       letter-spacing: 1px;
       font-size: 0.75rem;
       text-transform: uppercase;
-      color: #bbb;
+      color: #ccc;
     }
     .skill-icon {
       font-size: 2.2rem;
@@ -196,8 +183,8 @@
       margin: 1.2rem 0 0.5rem;
     }
     .contact-link {
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(0, 255, 65, 0.4);
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(0, 255, 65, 0.5);
       border-radius: 60px;
       padding: 0.7rem 1.8rem;
       text-decoration: none;
@@ -215,18 +202,17 @@
     }
     .quote {
       font-style: italic;
-      margin-top: 1.5rem;
+      margin-top: 1.8rem;
       font-size: 0.9rem;
-      color: #bbb;
+      color: #ccc;
       border-left: 3px solid #00ff41;
       padding-left: 1.2rem;
       text-align: left;
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.3);
       border-radius: 0 0.6rem 0.6rem 0;
       width: fit-content;
       max-width: 90%;
     }
-    /* only play/pause button – clean */
     .music-control {
       position: fixed;
       bottom: 1.5rem;
@@ -252,14 +238,37 @@
       transform: scale(1.05);
     }
     @media (max-width: 800px) {
-      .hero-flex { flex-direction: column; text-align: center; }
-      .hero-content { text-align: center; }
-      h1 { font-size: 2.3rem; }
-      .fixed-content { padding: 1.2rem; width: 94%; }
-      .fixed-content.transparent-panel { padding: 1.2rem; }
-      .scene-layer { padding: 0.5rem; }
-      .quote { text-align: center; border-left: none; border-top: 2px solid #00ff41; padding-left: 0; padding-top: 0.8rem; width: 100%; }
-      .stats-grid, .skills-grid { gap: 0.9rem; }
+      .hero-flex {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+      }
+      .hero-content {
+        text-align: center;
+      }
+      h1 {
+        font-size: 2.3rem;
+      }
+      .fixed-content {
+        padding: 1.2rem;
+        width: 94%;
+      }
+      .scene-layer {
+        padding: 0.5rem;
+      }
+      .quote {
+        text-align: center;
+        border-left: none;
+        border-top: 2px solid #00ff41;
+        padding-left: 0;
+        padding-top: 0.8rem;
+        width: 100%;
+        margin-top: 1.5rem;
+      }
+      .stats-grid, .skills-grid {
+        gap: 0.9rem;
+        margin-top: 1.2rem;
+      }
     }
   </style>
 </head>
@@ -310,7 +319,6 @@
   controls.autoRotate = true;
   controls.autoRotateSpeed = 0.65;
   
-  // central core + wireframe
   const coreGeo = new THREE.IcosahedronGeometry(1.6, 1);
   const coreMat = new THREE.MeshStandardMaterial({ color: 0x00ff41, roughness: 0.25, metalness: 0.7, emissive: 0x00ff41, emissiveIntensity: 0.55 });
   const core = new THREE.Mesh(coreGeo, coreMat);
@@ -321,7 +329,6 @@
   const cage = new THREE.Mesh(cageGeo, cageMat);
   scene.add(cage);
   
-  // orbiting particles
   const particleCount = 90;
   const particleGeo = new THREE.BufferGeometry();
   const particlePositions = new Float32Array(particleCount * 3);
@@ -352,7 +359,7 @@
   const starsField = new THREE.Points(starsGeo, starsMat);
   scene.add(starsField);
   
-  // --- AUDIO ENGINE: pure music reactivity, no extra UI ---
+  // --- AUDIO ENGINE: pure music reactivity (starts ambient on first click) ---
   let audioCtx = null;
   let analyser = null;
   let sourceNode = null;
@@ -370,7 +377,6 @@
     return audioCtx;
   }
   
-  // ambient drone (always reactive)
   function startAmbientSynth() {
     if (!audioCtx) initAudioContext();
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -418,14 +424,12 @@
   function toggleMusic() {
     if (!audioCtx) initAudioContext();
     if (isPlaying) {
-      // pause
       if (sourceNode) { try { sourceNode.stop(); } catch(e) {} sourceNode = null; }
       if (synthOsc1) { try { synthOsc1.stop(); } catch(e) {} synthOsc1 = null; }
       if (synthOsc2) { try { synthOsc2.stop(); } catch(e) {} synthOsc2 = null; }
       isPlaying = false;
       document.getElementById('audioControl').innerHTML = '<i class="fas fa-play"></i>';
     } else {
-      // resume: if custom track exists, replay it, else ambient
       if (isCustomTrack && musicBuffer) {
         const newSource = audioCtx.createBufferSource();
         newSource.buffer = musicBuffer;
@@ -443,7 +447,6 @@
     if (audioCtx.state === 'suspended') audioCtx.resume();
   }
   
-  // music intensity 0..1
   function getAudioIntensity() {
     if (isPlaying && analyser && audioCtx?.state === 'running') {
       const data = new Uint8Array(analyser.frequencyBinCount);
@@ -459,7 +462,6 @@
   
   document.getElementById('audioControl').addEventListener('click', toggleMusic);
   
-  // first interaction auto-start ambient
   window.addEventListener('click', () => {
     if (!audioCtx) {
       initAudioContext();
@@ -470,7 +472,7 @@
     }
   }, { once: true });
   
-  // ---------- SCROLL CONTENT (crossfade + panel transparency after hero) ----------
+  // ---------- SCROLL CONTENT (crossfade) ----------
   const scenesData = [
     { 
       id: 'hero',
@@ -478,7 +480,7 @@
         <div class="hero-flex">
           <img src="https://ui-avatars.com/api/?background=0D1117&color=00ff41&bold=true&size=140&name=ASWANTH+R" alt="Aswanth R" class="profile-img">
           <div class="hero-content">
-            <div class="badge">✦ ETHICAL HACKER / PYTHON DEV</div>
+            <div class="badge"> ETHICAL HACKER / PYTHON DEV</div>
             <h1>Breaking <span class="gradient-text">systems</span><br>fixing <span class="gradient-text">code</span></h1>
             <p class="desc">ISC2 Candidate · Penetration testing · Python automation · Code fixer. 1000+ contributions.</p>
             <div class="quote">“If it’s code, I can fix it.” — Aswanth R</div>
@@ -528,7 +530,6 @@
   const layerB = document.getElementById('sceneLayerB');
   let activeLayer = 'A';
   let currentSceneIdx = 0;
-  const fixedPanel = document.querySelector('.fixed-content');
   
   function setSceneContent(layer, html) {
     layer.innerHTML = html;
@@ -557,13 +558,6 @@
       const progress = self.progress;
       const targetIdx = Math.min(Math.floor(progress * scenesData.length), scenesData.length - 1);
       
-      // make glass panel disappear after first page (hero)
-      if (targetIdx >= 1) {
-        fixedPanel.classList.add('transparent-panel');
-      } else {
-        fixedPanel.classList.remove('transparent-panel');
-      }
-      
       if (targetIdx !== currentSceneIdx) {
         currentSceneIdx = targetIdx;
         const activeElem = activeLayer === 'A' ? layerA : layerB;
@@ -576,12 +570,10 @@
           activeLayer = activeLayer === 'A' ? 'B' : 'A';
         }});
       }
-      // subtle star rotation on scroll (cosmetic)
       starsField.rotation.y = progress * 0.6;
     }
   });
   
-  // ---- MUSIC REACTIVITY LOOP (core & bloom only, no scroll influence) ----
   function reactToAudio() {
     const intensity = getAudioIntensity();
     coreMat.emissiveIntensity = 0.45 + intensity * 1.0;
@@ -607,13 +599,6 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     composer.setSize(window.innerWidth, window.innerHeight);
   });
-  
-  // small fallback to ensure audio readiness (if user never clicks, still fine)
-  setTimeout(() => {
-    if (!isPlaying && audioCtx?.state !== 'running') {
-      // idle, but user click will start
-    }
-  }, 300);
 </script>
 </body>
 </html>
