@@ -1,506 +1,788 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Aswanth R | NodeX-AR</title>
-  
-  <!-- SEO META TAGS -->
-  <meta name="google-site-verification" content="wdF0k-MYoScdAzPf5TVDV4u540VXLTKu7phhcvnCnKc" />
-  <meta name="description" content="NodeX-AR | Aswanth R - System Breaker, Ethical Hacker, Code Fixer. 1000+ contributions, Python exploit dev, penetration testing. Music‑reactive diagonal wave portfolio.">
-  <meta name="keywords" content="NodeX-AR, Aswanth R, ethical hacker, code fixer, penetration testing, cybersecurity, Python developer">
-  <meta name="author" content="Aswanth R (NodeX-AR)">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="NodeX-AR | Aswanth R - Ethical Hacker & Code Fixer">
-  <meta property="og:image" content="https://a-r.is-a.dev/aswanth-r-nodex-ar.png">
-  <meta property="og:description" content="Diagonal wave visualizer, music‑reactive portfolio. Ethical hacking & Python development.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://a-r.is-a.dev">
-  <link rel="canonical" href="https://a-r.is-a.dev">
-  
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Aswanth R",
-    "alternateName": "NodeX-AR",
-    "image": "https://a-r.is-a.dev/aswanth-r-nodex-ar.png",
-    "url": "https://a-r.is-a.dev",
-    "sameAs": ["https://github.com/Nodex-AR"],
-    "jobTitle": "Ethical Hacker & Code Fixer",
-    "description": "System Breaker, Code Fixer, Penetration Testing Expert with 1000+ contributions."
-  }
-  </script>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #03030c;
-      font-family: 'Inter', sans-serif;
-      color: #f0f0f0;
-      overflow-x: hidden;
-    }
-    #wave-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      display: block;
-    }
-    .content { position: relative; z-index: 10; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Aswanth R | NodeX-AR — Ethical Hacker & Python Developer</title>
     
-    /* custom cursor */
-    .cursor-dot { width: 6px; height: 6px; background: #00ff41; border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; mix-blend-mode: difference; }
-    .cursor-follower { width: 32px; height: 32px; border: 1px solid rgba(0,255,65,0.6); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
+    <!-- ==================== SEO META TAGS (Replace with your own) ==================== -->
+    <meta name="description" content="NodeX-AR | Aswanth R - System Breaker, Ethical Hacker, Code Fixer. 1000+ contributions, Python exploit dev, penetration testing. Immersive audio-reactive portfolio.">
+    <meta name="keywords" content="NodeX-AR, Aswanth R, ethical hacker, code fixer, penetration testing, cybersecurity, Python developer">
+    <meta name="author" content="Aswanth R (NodeX-AR)">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="NodeX-AR | Aswanth R - Ethical Hacker & Code Fixer">
+    <meta property="og:image" content="https://a-r.is-a.dev/aswanth-r-nodex-ar.png"> <!-- Update with your image URL -->
+    <meta property="og:description" content="Immersive audio-reactive portfolio. Ethical hacking & Python development.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://a-r.is-a.dev">
+    <link rel="canonical" href="https://a-r.is-a.dev">
     
-    /* navigation */
-    .nav { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); width: calc(100% - 48px); max-width: 1280px; background: rgba(8,8,18,0.7); backdrop-filter: blur(18px); border-radius: 80px; padding: 0.7rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 100; border: 1px solid rgba(255,255,255,0.08); font-family: 'Space Grotesk', monospace; }
-    .logo { font-size: 1.4rem; font-weight: 600; background: linear-gradient(135deg, #fff, #00ff41); background-clip: text; -webkit-background-clip: text; color: transparent; }
-    .nav-links { display: flex; gap: 2rem; }
-    .nav-links a { text-decoration: none; font-weight: 500; font-size: 0.85rem; letter-spacing: 1px; color: #ddd; transition: 0.2s; }
-    .nav-links a:hover { color: #00ff41; }
+    <!-- Favicons (Add your own) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E👤%3C/text%3E%3C/svg%3E">
+
+    <!-- Fonts and Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
-    .hero { min-height: 100vh; display: flex; align-items: center; padding: 7rem 0 5rem; }
-    .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: center; }
-    .hero-badge { font-size: 0.7rem; letter-spacing: 4px; color: #00ff41; margin-bottom: 1rem; }
-    .hero h1 { font-size: 4.5rem; font-weight: 700; font-family: 'Space Grotesk', monospace; line-height: 1.1; margin-bottom: 1.2rem; }
-    .accent { background: linear-gradient(125deg, #fff, #00ff41); background-clip: text; -webkit-background-clip: text; color: transparent; }
-    .hero-desc { font-size: 1.1rem; color: #aaaac8; max-width: 500px; margin-bottom: 2rem; }
-    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary { background: #00ff41; color: #0a0a12; padding: 0.9rem 2rem; border-radius: 40px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
-    .btn-outline { background: transparent; border: 1px solid rgba(0,255,65,0.5); padding: 0.9rem 2rem; border-radius: 40px; font-weight: 500; color: #fff; text-decoration: none; }
-    .hero-image { display: flex; justify-content: center; align-items: center; }
-    .hero-image img { width: 100%; max-width: 380px; border-radius: 50%; border: 3px solid rgba(0,255,65,0.6); box-shadow: 0 0 30px rgba(0,255,65,0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .hero-image img:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,255,65,0.6); }
-    
-    .hero-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 35px 0; }
-    .stat-card { background: rgba(0,255,65,0.05); border: 1px solid #00ff41; padding: 15px 8px; text-align: center; backdrop-filter: blur(5px); border-radius: 8px; transition: 0.2s; }
-    .stat-number { font-size: 1.8rem; font-weight: bold; font-family: 'Orbitron', monospace; text-shadow: 0 0 5px #00ff41; color: #00ff41; }
-    .stat-label { font-size: 0.75rem; margin-top: 6px; color: #ccc; letter-spacing: 1px; }
-    
-    .section-title { font-size: 1.8rem; font-family: 'Orbitron', monospace; margin: 40px 0 20px; text-align: center; letter-spacing: 2px; }
-    .section-title::before { content: '< '; color: #00ff41; }
-    .section-title::after { content: ' />'; color: #00ff41; }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin: 30px 0; }
-    .skill-card { background: rgba(0,255,65,0.03); border: 1px solid #00ff41; padding: 20px 15px; border-radius: 12px; backdrop-filter: blur(4px); text-align: center; transition: 0.2s; }
-    .skill-card:hover { transform: translateY(-4px); box-shadow: 0 0 15px rgba(0,255,65,0.3); background: rgba(0,255,65,0.08); }
-    .skill-icon { font-size: 2.5rem; margin-bottom: 12px; display: block; color: #00ff41; }
-    .skill-title { font-size: 1.2rem; font-weight: bold; font-family: 'Orbitron', monospace; margin-bottom: 8px; }
-    
-    .contact-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 30px 0; }
-    .contact-card { background: rgba(0,255,65,0.05); border: 1px solid #00ff41; padding: 15px 25px; text-align: center; text-decoration: none; color: #00ff41; transition: 0.2s; border-radius: 30px; min-width: 150px; }
-    .contact-card:hover { background: #00ff41; color: #0a0a0a; transform: scale(0.97); }
-    footer { text-align: center; padding: 25px; border-top: 1px solid #00ff41; margin-top: 45px; font-size: 0.7rem; }
-    
-    /* Play/Pause button (bottom-right) */
-    .audio-control {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: rgba(0, 255, 65, 0.85);
-      backdrop-filter: blur(8px);
-      border: none;
-      color: #0a0a12;
-      font-size: 1.5rem;
-      cursor: pointer;
-      z-index: 1001;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s, background 0.2s;
-    }
-    .audio-control:hover {
-      transform: scale(1.05);
-      background: #00ff41;
-    }
-    
-    @media (max-width: 900px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
-      .hero h1 { font-size: 2.8rem; }
-      .hero-image img { max-width: 280px; }
-      .nav { width: calc(100% - 30px); padding: 0.6rem 1.2rem; }
-      .nav-links { gap: 1rem; }
-      .cursor-dot, .cursor-follower { display: none; }
-    }
-  </style>
+    <style>
+        /* ---------- RESET & GLOBAL STYLES ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #05050A;
+            font-family: 'Inter', sans-serif;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        /* ---------- CUSTOM CURSOR ---------- */
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #00ff41;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(0, 255, 65, 0.6);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+
+        /* Hide custom cursor on touch devices */
+        @media (max-width: 768px) {
+            .cursor-dot, .cursor-follower {
+                display: none;
+            }
+        }
+
+        /* ---------- AUDIO-REACTIVE BACKGROUND ---------- */
+        #audio-reactive-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #0a0a0a, #000000);
+        }
+        
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: -1;
+        }
+
+        /* ---------- GLASSMORPHISM & CONTENT STYLES ---------- */
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .glass-card {
+            background: rgba(20, 20, 30, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 255, 65, 0.6);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #00ff41, #4facfe, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .skill-badge {
+            background: rgba(0, 255, 65, 0.08);
+            border: 1px solid rgba(0, 255, 65, 0.25);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .skill-badge:hover {
+            background: rgba(0, 255, 65, 0.2);
+            transform: scale(1.02);
+            border-color: #4facfe;
+        }
+
+        /* ---------- LAYOUT ---------- */
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 7rem 0 5rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            color: #00ff41;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', monospace;
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: #aaaac8;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #00ff41;
+            color: #0a0a12;
+            padding: 0.9rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(0, 255, 65, 0.5);
+            padding: 0.9rem 2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 255, 65, 0.1);
+            border-color: #00ff41;
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 380px;
+            border-radius: 50%;
+            border: 3px solid rgba(0, 255, 65, 0.6);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.5);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Space Grotesk', monospace;
+            color: #00ff41;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+        }
+
+        /* Skills Matrix */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', monospace;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .skill-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            color: #00ff41;
+            margin-bottom: 1rem;
+        }
+
+        .skill-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Grid */
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 2rem 0 3rem;
+        }
+
+        .contact-card {
+            background: rgba(20, 20, 30, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 3rem;
+            padding: 1rem 2rem;
+            text-align: center;
+            text-decoration: none;
+            color: #e0e0e0;
+            transition: all 0.2s;
+            min-width: 160px;
+        }
+
+        .contact-card:hover {
+            background: #00ff41;
+            color: #0a0a0a;
+            transform: scale(0.98);
+        }
+
+        /* Music Control Button */
+        .music-control {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 255, 65, 0.5);
+            color: #00ff41;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .music-control:hover {
+            background: #00ff41;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .hero-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-image img {
+                max-width: 260px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="cursor-dot"></div>
-<div class="cursor-follower"></div>
-<canvas id="wave-canvas"></canvas>
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-follower"></div>
+    
+    <canvas id="audio-reactive-bg"></canvas>
 
-<div class="content">
-  <nav class="nav">
-    <a href="#" class="logo">Aswanth R</a>
-    <div class="nav-links">
-      <a href="#stats">WORK</a>
-      <a href="#skills">SKILLS</a>
-      <a href="#contact">CONTACT</a>
-    </div>
-  </nav>
+    <div class="content">
+        <!-- Navigation -->
+        <nav class="glass-nav fixed top-0 left-0 w-full z-50 py-4">
+            <div class="container flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold font-mono tracking-tighter"><span class="text-green-400">&lt;</span>NodeX-AR<span class="text-green-400">/&gt;</span></a>
+                <div class="hidden md:flex space-x-8 font-mono text-sm">
+                    <a href="#stats" class="hover:text-green-400 transition-colors">WORK</a>
+                    <a href="#skills" class="hover:text-green-400 transition-colors">SKILLS</a>
+                    <a href="#contact" class="hover:text-green-400 transition-colors">CONTACT</a>
+                </div>
+                <a href="https://github.com/NodeX-AR" target="_blank" class="text-gray-400 hover:text-green-400 text-xl"><i class="fab fa-github"></i></a>
+            </div>
+        </nav>
 
-  <div class="container">
-    <section class="hero">
-      <div class="hero-grid">
-        <div>
-          <div class="hero-badge">ETHICAL HACKER / PYTHON DEV</div>
-          <h1>Breaking <span class="accent">systems</span><br>fixing <span class="accent">code</span></h1>
-          <p class="hero-desc">ISC2 Candidate · Penetration testing · Python automation · Code fixer. 1000+ contributions.</p>
-          <div class="btn-group">
-            <a href="#stats" class="btn-primary">Explore stats <i class="fas fa-arrow-right"></i></a>
-            <a href="#contact" class="btn-outline">Connect</a>
-          </div>
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-grid">
+                    <div>
+                        <div class="hero-badge">✦ ETHICAL HACKER / PYTHON DEV</div>
+                        <h1>Breaking <span class="gradient-text">systems</span><br>fixing <span class="gradient-text">code</span></h1>
+                        <p class="hero-desc">ISC2 Candidate · Penetration testing · Python automation · Code fixer. 1000+ contributions.</p>
+                        <div class="btn-group">
+                            <a href="#stats" class="btn-primary">Explore stats <i class="fas fa-arrow-right"></i></a>
+                            <a href="#contact" class="btn-outline">Connect</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <!-- Replace with your own image URL -->
+                        <img src="https://a-r.is-a.dev/aswanth-r-nodex-ar.png" alt="Aswanth R" onerror="this.src='https://avatars.githubusercontent.com/u/139892046?v=4'">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <div id="stats" class="stats-grid">
+                <div class="stat-card glass-card"><div class="stat-number">1000+</div><div class="stat-label">CONTRIBUTIONS</div></div>
+                <div class="stat-card glass-card"><div class="stat-number">30+</div><div class="stat-label">ACTIVE REPOS</div></div>
+                <div class="stat-card glass-card"><div class="stat-number">50000+</div><div class="stat-label">LINES FIXED</div></div>
+                <div class="stat-card glass-card"><div class="stat-number">1500+</div><div class="stat-label">BREACHES</div></div>
+            </div>
+
+            <!-- Skills Section -->
+            <section id="skills">
+                <h2 class="section-title"><span class="gradient-text">&lt;</span> SKILL_MATRIX <span class="gradient-text">/&gt;</span></h2>
+                <div class="skills-grid">
+                    <div class="skill-card glass-card"><i class="fab fa-python skill-icon"></i><div class="skill-title">PYTHON</div><div>Advanced • Automation • Exploit Dev</div></div>
+                    <div class="skill-card glass-card"><i class="fas fa-lock skill-icon"></i><div class="skill-title">ETHICAL HACKING</div><div>Pen Testing • Reverse Engineering</div></div>
+                    <div class="skill-card glass-card"><i class="fas fa-globe skill-icon"></i><div class="skill-title">WEB TECH</div><div>JS/HTML/CSS • React • Node.js</div></div>
+                    <div class="skill-card glass-card"><i class="fas fa-bolt skill-icon"></i><div class="skill-title">CODE FIXER</div><div>Debug • Refactor • Optimize</div></div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact">
+                <h2 class="section-title"><span class="gradient-text">&lt;</span> CONNECT_NOW <span class="gradient-text">/&gt;</span></h2>
+                <div class="contact-grid">
+                    <a href="https://github.com/NodeX-AR" target="_blank" class="contact-card"><i class="fab fa-github"></i> GITHUB<span style="display:block; font-size:0.7rem;">@NodeX-AR</span></a>
+                    <a href="#" id="secureEmailBtn" class="contact-card"><i class="fas fa-envelope"></i> SECURE_MSG<span style="display:block; font-size:0.7rem;">encrypted mail</span></a>
+                </div>
+            </section>
+
+            <footer>
+                <div>═══════════════════════════════════════</div>
+                <div>NODEX-AR // SYSTEM BREACHER // CODE FIXER</div>
+                <div>═══════════════════════════════════════</div>
+                <div>{ "status": "ACTIVE", "motto": "If it's code, I can fix it." }</div>
+            </footer>
         </div>
-        <div class="hero-image">
-          <img src="/aswanth-r-nodex-ar.png" alt="Aswanth R" onerror="this.src='https://avatars.githubusercontent.com/u/139892046?v=4'">
-        </div>
-      </div>
-    </section>
-
-    <div id="stats" class="hero-stats">
-      <div class="stat-card"><div class="stat-number">1000+</div><div class="stat-label">CONTRIBUTIONS</div></div>
-      <div class="stat-card"><div class="stat-number">30+</div><div class="stat-label">ACTIVE REPOS</div></div>
-      <div class="stat-card"><div class="stat-number">50000+</div><div class="stat-label">LINES FIXED</div></div>
-      <div class="stat-card"><div class="stat-number">1500+</div><div class="stat-label">BREACHES</div></div>
     </div>
 
-    <section id="skills">
-      <h2 class="section-title">SKILL_MATRIX</h2>
-      <div class="skills-grid">
-        <div class="skill-card"><i class="fab fa-python skill-icon"></i><div class="skill-title">PYTHON</div><div>Advanced • Automation • Exploit Dev</div></div>
-        <div class="skill-card"><i class="fas fa-lock skill-icon"></i><div class="skill-title">ETHICAL HACKING</div><div>Pen Testing • Reverse Engineering</div></div>
-        <div class="skill-card"><i class="fas fa-globe skill-icon"></i><div class="skill-title">WEB TECH</div><div>JS/HTML/CSS • React • Node.js</div></div>
-        <div class="skill-card"><i class="fas fa-bolt skill-icon"></i><div class="skill-title">CODE FIXER</div><div>Debug • Refactor • Optimize</div></div>
-      </div>
-    </section>
+    <!-- Music Play/Pause Button -->
+    <button id="audioControl" class="music-control" aria-label="Play/Pause music">
+        <i class="fas fa-play"></i>
+    </button>
 
-    <section id="contact">
-      <h2 class="section-title">CONNECT_NOW</h2>
-      <div class="contact-grid">
-        <a href="https://github.com/Nodex-AR" target="_blank" class="contact-card"><i class="fab fa-github"></i> GITHUB<span style="display:block; font-size:0.7rem;">@NodeX-AR</span></a>
-        <a href="#" id="secureEmailBtn" class="contact-card"><i class="fas fa-envelope"></i> SECURE_MSG<span style="display:block; font-size:0.7rem;">encrypted mail</span></a>
-      </div>
-    </section>
-
-    <footer>
-      <div>═══════════════════════════════════════</div>
-      <div>NODEX-AR // SYSTEM BREACHER // CODE FIXER</div>
-      <div>═══════════════════════════════════════</div>
-      <div>{ "status": "ACTIVE", "motto": "If it's code, I can fix it." }</div>
-    </footer>
-  </div>
-</div>
-
-<!-- Play/Pause button -->
-<button id="audioControl" class="audio-control" aria-label="Play/Pause music">
-  <i class="fas fa-play"></i>
-</button>
-
-<script>
-  // ---------- DIAGONAL WAVE VISUALIZER + AUDIO HANDLING ----------
-  const canvas = document.getElementById('wave-canvas');
-  const ctx = canvas.getContext('2d');
-  let width, height;
-  
-  function resizeCanvas() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-  }
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-  
-  // Audio globals
-  let audioContext = null;
-  let analyser = null;
-  let source = null;
-  let audioBuffer = null;
-  let isPlaying = false;
-  let freqData = new Uint8Array(128);
-  let fallbackIntensity = 0;
-  let currentSourceNode = null;
-  let animationId = null;
-  
-  // Simulated beat (fallback)
-  let lastTimestamp = 0;
-  function updateFallbackIntensity(now) {
-    const bpm = 130;
-    const period = 60 / bpm;
-    const phase = (now % period) / period;
-    let kick = Math.max(0, 1 - phase * 6) * 0.8;
-    let bass = Math.max(0, 1 - ((now % (period*0.5)) / (period*0.5)) * 4) * 0.4;
-    let raw = Math.min(1, kick + bass);
-    fallbackIntensity = fallbackIntensity * 0.85 + raw * 0.15;
-    return fallbackIntensity;
-  }
-  
-  // Load and decode bg.mp3
-  async function loadAudioBuffer() {
-    if (audioBuffer) return audioBuffer;
-    try {
-      const response = await fetch('bg.mp3');
-      if (!response.ok) throw new Error('bg.mp3 not found');
-      const arrayBuffer = await response.arrayBuffer();
-      if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-      return audioBuffer;
-    } catch (err) {
-      console.warn('Failed to load bg.mp3, will use fallback beat only', err);
-      return null;
-    }
-  }
-  
-  // Start playback (called by user gesture or button)
-  async function startPlayback() {
-    if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioContext.state === 'suspended') await audioContext.resume();
-    if (audioBuffer) {
-      // Stop any existing source
-      if (currentSourceNode) {
-        try { currentSourceNode.stop(); } catch(e) {}
-        currentSourceNode = null;
-      }
-      const newSource = audioContext.createBufferSource();
-      newSource.buffer = audioBuffer;
-      newSource.loop = true;
-      newSource.connect(analyser);
-      analyser.connect(audioContext.destination);
-      newSource.start();
-      currentSourceNode = newSource;
-      isPlaying = true;
-      document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
-    } else {
-      // fallback only, no real audio
-      isPlaying = true;
-      document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
-    }
-  }
-  
-  function stopPlayback() {
-    if (currentSourceNode) {
-      try { currentSourceNode.stop(); } catch(e) {}
-      currentSourceNode = null;
-    }
-    isPlaying = false;
-    document.getElementById('audioControl').innerHTML = '<i class="fas fa-play"></i>';
-  }
-  
-  function togglePlayback() {
-    if (isPlaying) {
-      stopPlayback();
-    } else {
-      startPlayback();
-    }
-  }
-  
-  // Initial setup: create analyser but no playback yet
-  function initAudio() {
-    if (audioContext) return;
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    analyser = audioContext.createAnalyser();
-    analyser.fftSize = 256;
-    freqData = new Uint8Array(analyser.frequencyBinCount);
-    // Preload buffer but don't play until user interaction or button
-    loadAudioBuffer();
-    // Keep AudioContext suspended initially – will resume on first interaction or button click
-  }
-  
-  // Auto-start on first user interaction (scroll, click, touch) – complies with autoplay policies
-  let interactionHandled = false;
-  function autoStartOnInteraction() {
-    if (interactionHandled) return;
-    interactionHandled = true;
-    initAudio();
-    // Resume context and start playback only if not already playing
-    if (audioContext && audioContext.state === 'suspended') {
-      audioContext.resume().then(() => {
-        startPlayback();
-      }).catch(e => console.log('AudioContext resume failed', e));
-    } else {
-      startPlayback();
-    }
-    // Remove listeners after first interaction
-    window.removeEventListener('scroll', autoStartOnInteraction);
-    window.removeEventListener('click', autoStartOnInteraction);
-    window.removeEventListener('touchstart', autoStartOnInteraction);
-  }
-  
-  window.addEventListener('scroll', autoStartOnInteraction);
-  window.addEventListener('click', autoStartOnInteraction);
-  window.addEventListener('touchstart', autoStartOnInteraction);
-  
-  // Button manual control
-  const audioBtn = document.getElementById('audioControl');
-  audioBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (!interactionHandled) {
-      // First click: initialize and start
-      interactionHandled = true;
-      initAudio();
-      if (audioContext && audioContext.state === 'suspended') {
-        audioContext.resume().then(() => startPlayback());
-      } else {
-        startPlayback();
-      }
-      // Remove auto listeners
-      window.removeEventListener('scroll', autoStartOnInteraction);
-      window.removeEventListener('click', autoStartOnInteraction);
-      window.removeEventListener('touchstart', autoStartOnInteraction);
-    } else {
-      togglePlayback();
-    }
-  });
-  
-  // ---------- DRAWING LOOP (diagonal waves, reactive to real or simulated intensity) ----------
-  let time = 0;
-  function drawWaves(now) {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, width, height);
-    
-    let intensity = 0;
-    let freqColorShift = 0;
-    
-    if (isPlaying && analyser && audioContext && audioContext.state === 'running') {
-      analyser.getByteFrequencyData(freqData);
-      let sum = 0;
-      let weightedSum = 0;
-      for (let i = 0; i < freqData.length; i++) {
-        sum += freqData[i];
-        weightedSum += freqData[i] * i;
-      }
-      if (sum > 0) {
-        intensity = sum / (freqData.length * 255);
-        intensity = Math.min(1, intensity * 1.2);
-        const avgFreq = weightedSum / (sum * freqData.length);
-        freqColorShift = avgFreq;
-      } else {
-        intensity = 0.05;
-      }
-    } else {
-      intensity = updateFallbackIntensity(now);
-      freqColorShift = 0.3 + Math.sin(now * 2) * 0.2;
-    }
-    
-    const ampFactor = 0.3 + intensity * 1.2;
-    const lineSpacing = 28;
-    const waveAmp = 18 * ampFactor;
-    const waveFreq = 0.023;
-    const angle = Math.PI / 4; // 45°
-    const cosA = Math.cos(angle);
-    const sinA = Math.sin(angle);
-    const maxDist = Math.sqrt(width*width + height*height);
-    const numLines = Math.floor(maxDist / lineSpacing) + 8;
-    
-    const hue = 120 + intensity * 30 + freqColorShift * 20;
-    const sat = 70 + intensity * 30;
-    const light = 45 + intensity * 25;
-    
-    ctx.lineWidth = 1.5 + intensity * 2.5;
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = `hsl(${hue}, 80%, 60%)`;
-    
-    for (let i = -5; i < numLines; i++) {
-      const offset = i * lineSpacing - (now * 55) % lineSpacing;
-      const perLineAmp = waveAmp * (0.6 + Math.sin(i * 0.5) * 0.4);
-      ctx.beginPath();
-      for (let t = 0; t <= maxDist; t += 14) {
-        const baseX = -width/2 + t * cosA;
-        const baseY = -height/2 + t * sinA;
-        const perpX = -sinA;
-        const perpY = cosA;
-        const wave = Math.sin(t * waveFreq * 1.6 + now * 4.2) * perLineAmp
-                   + Math.sin(t * waveFreq * 3.1 + now * 6.5) * (perLineAmp * 0.45);
-        const x = baseX + perpX * (offset + wave);
-        const y = baseY + perpY * (offset + wave);
-        if (t === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.strokeStyle = `hsl(${hue + i * 2}, ${sat}%, ${light}%)`;
-      ctx.stroke();
-    }
-    ctx.shadowBlur = 0;
-    
-    const glowStrength = 0.05 + intensity * 0.12;
-    const grad = ctx.createRadialGradient(width/2, height/2, 30, width/2, height/2, 220);
-    grad.addColorStop(0, `rgba(0, 255, 65, ${glowStrength})`);
-    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, width, height);
-  }
-  
-  function animate(timestamp) {
-    const now = performance.now() / 1000;
-    drawWaves(now);
-    requestAnimationFrame(animate);
-  }
-  requestAnimationFrame(animate);
-  
-  // ---------- GSAP animations, custom cursor, stats counter ----------
-  if (window.innerWidth > 900) {
-    const dot = document.querySelector('.cursor-dot');
-    const follower = document.querySelector('.cursor-follower');
-    document.addEventListener('mousemove', (e) => {
-      gsap.to(dot, { duration: 0.05, x: e.clientX - 3, y: e.clientY - 3 });
-      gsap.to(follower, { duration: 0.12, x: e.clientX - 16, y: e.clientY - 16 });
-    });
-    document.querySelectorAll('a, button, .stat-card, .skill-card, .contact-card').forEach(el => {
-      el.addEventListener('mouseenter', () => gsap.to(follower, { scale: 1.8, borderColor: '#00ff41', duration: 0.2 }));
-      el.addEventListener('mouseleave', () => gsap.to(follower, { scale: 1, borderColor: 'rgba(0,255,65,0.6)', duration: 0.2 }));
-    });
-  }
-  
-  const statNumbers = document.querySelectorAll('.stat-number');
-  function startStats() {
-    statNumbers.forEach(el => {
-      const target = parseInt(el.innerText, 10);
-      let current = 0;
-      const step = target / 50;
-      const update = () => {
-        current += step;
-        if (current < target) { el.innerText = Math.floor(current); requestAnimationFrame(update); }
-        else { el.innerText = target; }
-      };
-      update();
-    });
-  }
-  ScrollTrigger.create({ trigger: ".hero-stats", start: "top 85%", onEnter: startStats, once: true });
-  
-  document.querySelectorAll('.nav-links a, .btn-primary, .btn-outline').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const hash = this.getAttribute('href');
-      if (hash && hash !== '#') {
-        e.preventDefault();
-        const target = document.querySelector(hash);
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-  
-  document.getElementById('secureEmailBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    navigator.clipboard.writeText('aswanthr82@gmail.com');
-  });
-</script>
+    <script>
+        // ---------- AUDIO-REACTIVE BACKGROUND (MEMORY REBOOT AESTHETIC) ----------
+        const canvas = document.getElementById('audio-reactive-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let audioContext = null;
+        let analyser = null;
+        let source = null;
+        let audioBuffer = null;
+        let isPlaying = false;
+        let freqData = new Uint8Array(128);
+        let currentSourceNode = null;
+        let interactionHandled = false;
+        let animationId = null;
+        
+        // Visualizer parameters
+        let time = 0;
+        let particles = [];
+        const PARTICLE_COUNT = 150;
+        
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push({
+                    x: Math.random(),
+                    y: Math.random(),
+                    size: 1 + Math.random() * 3,
+                    speedX: (Math.random() - 0.5) * 0.005,
+                    speedY: (Math.random() - 0.5) * 0.005,
+                    angle: Math.random() * Math.PI * 2,
+                    radius: 50 + Math.random() * 150,
+                    orbitSpeed: 0.002 + Math.random() * 0.003,
+                    hue: 120 + Math.random() * 60
+                });
+            }
+        }
+        
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        initParticles();
+        
+        // Load and decode audio file
+        async function loadAudioBuffer() {
+            if (audioBuffer) return audioBuffer;
+            try {
+                const response = await fetch('bg.mp3');
+                if (!response.ok) throw new Error('bg.mp3 not found');
+                const arrayBuffer = await response.arrayBuffer();
+                if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                return audioBuffer;
+            } catch (err) {
+                console.warn('Audio file not found. Visualizer will run in ambient mode.', err);
+                return null;
+            }
+        }
+        
+        // Start playback
+        async function startPlayback() {
+            if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioContext.state === 'suspended') await audioContext.resume();
+            if (audioBuffer) {
+                if (currentSourceNode) {
+                    try { currentSourceNode.stop(); } catch(e) {}
+                    currentSourceNode = null;
+                }
+                const newSource = audioContext.createBufferSource();
+                newSource.buffer = audioBuffer;
+                newSource.loop = true;
+                if (!analyser) {
+                    analyser = audioContext.createAnalyser();
+                    analyser.fftSize = 256;
+                    freqData = new Uint8Array(analyser.frequencyBinCount);
+                }
+                newSource.connect(analyser);
+                analyser.connect(audioContext.destination);
+                newSource.start();
+                currentSourceNode = newSource;
+                isPlaying = true;
+                document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                // Ambient mode without audio
+                isPlaying = true;
+                document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
+            }
+        }
+        
+        function stopPlayback() {
+            if (currentSourceNode) {
+                try { currentSourceNode.stop(); } catch(e) {}
+                currentSourceNode = null;
+            }
+            isPlaying = false;
+            document.getElementById('audioControl').innerHTML = '<i class="fas fa-play"></i>';
+        }
+        
+        function togglePlayback() {
+            if (isPlaying) {
+                stopPlayback();
+            } else {
+                startPlayback();
+            }
+        }
+        
+        // Autostart on first user interaction
+        function autoStart() {
+            if (interactionHandled) return;
+            interactionHandled = true;
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+                freqData = new Uint8Array(analyser.frequencyBinCount);
+            }
+            loadAudioBuffer().then(() => {
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume().then(() => startPlayback());
+                } else {
+                    startPlayback();
+                }
+            });
+            window.removeEventListener('scroll', autoStart);
+            window.removeEventListener('click', autoStart);
+            window.removeEventListener('touchstart', autoStart);
+        }
+        
+        window.addEventListener('scroll', autoStart);
+        window.addEventListener('click', autoStart);
+        window.addEventListener('touchstart', autoStart);
+        
+        const audioBtn = document.getElementById('audioControl');
+        audioBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!interactionHandled) {
+                interactionHandled = true;
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    analyser = audioContext.createAnalyser();
+                    analyser.fftSize = 256;
+                    freqData = new Uint8Array(analyser.frequencyBinCount);
+                }
+                loadAudioBuffer().then(() => {
+                    if (audioContext.state === 'suspended') {
+                        audioContext.resume().then(() => startPlayback());
+                    } else {
+                        startPlayback();
+                    }
+                });
+                window.removeEventListener('scroll', autoStart);
+                window.removeEventListener('click', autoStart);
+                window.removeEventListener('touchstart', autoStart);
+            } else {
+                togglePlayback();
+            }
+        });
+        
+        // Helper to get current audio intensity
+        function getAudioIntensity() {
+            if (isPlaying && analyser && audioContext && audioContext.state === 'running') {
+                analyser.getByteFrequencyData(freqData);
+                let sum = 0;
+                for (let i = 0; i < freqData.length; i++) sum += freqData[i];
+                return sum / (freqData.length * 255);
+            }
+            // Simulate gentle ambient pulsing when no music is playing
+            return 0.2 + Math.sin(Date.now() * 0.002) * 0.1;
+        }
+        
+        // Draw the audio-reactive background
+        function drawBackground() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, width, height);
+            
+            const intensity = getAudioIntensity();
+            
+            // Create radial gradient background
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, `rgba(5, 5, 10, ${0.3 + intensity * 0.2})`);
+            gradient.addColorStop(1, `rgba(0, 0, 0, 0.9)`);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+            
+            // Draw orbiting particles
+            for (let p of particles) {
+                p.angle += p.orbitSpeed * (0.5 + intensity);
+                const x = width/2 + Math.cos(p.angle) * p.radius * (0.5 + intensity);
+                const y = height/2 + Math.sin(p.angle) * p.radius * (0.5 + intensity);
+                const size = p.size * (0.5 + intensity);
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                const alpha = 0.3 + intensity * 0.6;
+                const hue = p.hue + intensity * 30;
+                ctx.fillStyle = `hsla(${hue}, 80%, 60%, ${alpha})`;
+                ctx.fill();
+            }
+            
+            // Draw pulsing rings
+            const ringCount = 4;
+            for (let i = 0; i < ringCount; i++) {
+                const ringSize = (i + 1) * 60 + intensity * 40;
+                ctx.beginPath();
+                ctx.arc(width/2, height/2, ringSize, 0, Math.PI * 2);
+                ctx.strokeStyle = `hsla(${120 + intensity * 40}, 80%, 60%, ${0.1 + intensity * 0.15})`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+            
+            // Draw dynamic glitch lines
+            if (intensity > 0.6) {
+                for (let i = 0; i < 10; i++) {
+                    ctx.beginPath();
+                    const x = Math.random() * width;
+                    const y = Math.random() * height;
+                    const len = 20 + Math.random() * 80;
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + len, y);
+                    ctx.strokeStyle = `rgba(0, 255, 65, ${intensity * 0.5})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        function animate() {
+            drawBackground();
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        // ---------- GSAP Animations & Scroll Effects ----------
+        if (window.innerWidth > 768) {
+            const dot = document.querySelector('.cursor-dot');
+            const follower = document.querySelector('.cursor-follower');
+            document.addEventListener('mousemove', (e) => {
+                gsap.to(dot, { duration: 0.05, x: e.clientX - 3, y: e.clientY - 3 });
+                gsap.to(follower, { duration: 0.12, x: e.clientX - 16, y: e.clientY - 16 });
+            });
+            document.querySelectorAll('a, button, .stat-card, .skill-card, .contact-card').forEach(el => {
+                el.addEventListener('mouseenter', () => gsap.to(follower, { scale: 1.8, borderColor: '#00ff41', duration: 0.2 }));
+                el.addEventListener('mouseleave', () => gsap.to(follower, { scale: 1, borderColor: 'rgba(0,255,65,0.6)', duration: 0.2 }));
+            });
+        }
+        
+        // Animate stats numbers on scroll
+        const statNumbers = document.querySelectorAll('.stat-number');
+        function startStatsCounter() {
+            statNumbers.forEach(el => {
+                const target = parseInt(el.innerText, 10);
+                let current = 0;
+                const step = target / 50;
+                const update = () => {
+                    current += step;
+                    if (current < target) {
+                        el.innerText = Math.floor(current);
+                        requestAnimationFrame(update);
+                    } else {
+                        el.innerText = target;
+                    }
+                };
+                update();
+            });
+        }
+        
+        // Use Intersection Observer for stats animation
+        const statsSection = document.getElementById('stats');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startStatsCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        if (statsSection) observer.observe(statsSection);
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Email copy functionality
+        document.getElementById('secureEmailBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            navigator.clipboard.writeText('aswanthr82@gmail.com');
+            // Optional visual feedback
+            const btn = e.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 1500);
+        });
+    </script>
 </body>
 </html>
