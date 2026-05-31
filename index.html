@@ -3,10 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Aswanth R | NodeX-AR </title>
-  <meta name="description" content="NodeX-AR | Aswanth R - Ethical Hacker, Python Developer.">
+  <title>Aswanth R | NodeX-AR</title>
+  <meta name="description" content="NodeX-AR | Aswanth R - Ethical Hacker, Python Developer. Music‑reactive 3D portfolio.">
   <meta name="author" content="Aswanth R (NodeX-AR)">
-  <link rel="icon" type="image/png" sizes="48x48" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ff41'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -44,7 +51,7 @@
       z-index: 1;
       pointer-events: none;
     }
-    /* NO ROUNDED BOX – completely transparent container for text */
+    /* completely transparent container – no rounded box */
     .fixed-content {
       position: fixed;
       top: 50%;
@@ -81,7 +88,6 @@
       opacity: 1;
       pointer-events: auto;
     }
-    /* refined text alignment */
     .hero-flex {
       display: flex;
       align-items: center;
@@ -293,7 +299,7 @@
   import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
   import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-  // ---- 3D SCENE (ONLY MUSIC REACTIVE, NO SCROLL INFLUENCE) ----
+  // ---- 3D SCENE (ONLY MUSIC REACTIVE) ----
   const container = document.getElementById('canvas-container');
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x03030c);
@@ -359,7 +365,7 @@
   const starsField = new THREE.Points(starsGeo, starsMat);
   scene.add(starsField);
   
-  // --- AUDIO ENGINE: pure music reactivity (starts ambient on first click) ---
+  // --- AUDIO ENGINE: loads bg.mp3 if exists, otherwise ambient synth ---
   let audioCtx = null;
   let analyser = null;
   let sourceNode = null;
@@ -375,6 +381,21 @@
       analyser.fftSize = 256;
     }
     return audioCtx;
+  }
+  
+  async function loadMusicFromFile() {
+    try {
+      const response = await fetch('bg.mp3');
+      if (!response.ok) throw new Error();
+      const arrayBuffer = await response.arrayBuffer();
+      const ctx = initAudioContext();
+      musicBuffer = await ctx.decodeAudioData(arrayBuffer);
+      isCustomTrack = true;
+      return true;
+    } catch (err) {
+      console.log('bg.mp3 not found – using ambient synth');
+      return false;
+    }
   }
   
   function startAmbientSynth() {
@@ -421,6 +442,31 @@
     document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
   }
   
+  async function startCustomTrack() {
+    if (!musicBuffer) {
+      const loaded = await loadMusicFromFile();
+      if (!loaded) {
+        startAmbientSynth();
+        return;
+      }
+    }
+    if (sourceNode) { try { sourceNode.stop(); } catch(e) {} sourceNode = null; }
+    if (synthOsc1) { try { synthOsc1.stop(); } catch(e) {} synthOsc1 = null; }
+    if (synthOsc2) { try { synthOsc2.stop(); } catch(e) {} synthOsc2 = null; }
+    if (!audioCtx) initAudioContext();
+    if (audioCtx.state === 'suspended') await audioCtx.resume();
+    const newSource = audioCtx.createBufferSource();
+    newSource.buffer = musicBuffer;
+    newSource.loop = true;
+    newSource.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    newSource.start();
+    sourceNode = newSource;
+    isPlaying = true;
+    isCustomTrack = true;
+    document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
+  }
+  
   function toggleMusic() {
     if (!audioCtx) initAudioContext();
     if (isPlaying) {
@@ -431,15 +477,9 @@
       document.getElementById('audioControl').innerHTML = '<i class="fas fa-play"></i>';
     } else {
       if (isCustomTrack && musicBuffer) {
-        const newSource = audioCtx.createBufferSource();
-        newSource.buffer = musicBuffer;
-        newSource.loop = true;
-        newSource.connect(analyser);
-        analyser.connect(audioCtx.destination);
-        newSource.start();
-        sourceNode = newSource;
-        isPlaying = true;
-        document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
+        startCustomTrack();
+      } else if (musicBuffer) {
+        startCustomTrack();
       } else {
         startAmbientSynth();
       }
@@ -462,13 +502,21 @@
   
   document.getElementById('audioControl').addEventListener('click', toggleMusic);
   
-  window.addEventListener('click', () => {
+  // Auto-load music file silently and start on first interaction
+  window.addEventListener('click', async () => {
     if (!audioCtx) {
       initAudioContext();
-      startAmbientSynth();
+      await loadMusicFromFile();
+      if (musicBuffer) {
+        isCustomTrack = true;
+        startCustomTrack();
+      } else {
+        startAmbientSynth();
+      }
     } else if (audioCtx.state === 'suspended' && !isPlaying) {
       audioCtx.resume();
-      startAmbientSynth();
+      if (musicBuffer) startCustomTrack();
+      else startAmbientSynth();
     }
   }, { once: true });
   
@@ -478,9 +526,9 @@
       id: 'hero',
       html: `
         <div class="hero-flex">
-          <img src="https://ui-avatars.com/api/?background=0D1117&color=00ff41&bold=true&size=140&name=ASWANTH+R" alt="Aswanth R" class="profile-img">
+          <img src="/aswanth-r-nodex-ar.png" alt="Aswanth R" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?background=0D1117&color=00ff41&bold=true&size=140&name=ASWANTH+R'">
           <div class="hero-content">
-            <div class="badge"> ETHICAL HACKER / PYTHON DEV</div>
+            <div class="badge">✦ ETHICAL HACKER / PYTHON DEV</div>
             <h1>Breaking <span class="gradient-text">systems</span><br>fixing <span class="gradient-text">code</span></h1>
             <p class="desc">ISC2 Candidate · Penetration testing · Python automation · Code fixer. 1000+ contributions.</p>
             <div class="quote">“If it’s code, I can fix it.” — Aswanth R</div>
