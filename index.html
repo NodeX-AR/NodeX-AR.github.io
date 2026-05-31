@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Aswanth R | NodeX-AR — Ethical Hacker & Python Developer</title>
   
-  <!-- SEO, favicons, schema (unchanged) -->
+  <!-- SEO META TAGS (unchanged) -->
   <meta name="google-site-verification" content="wdF0k-MYoScdAzPf5TVDV4u540VXLTKu7phhcvnCnKc" />
-  <meta name="description" content="NodeX-AR | Aswanth R - System Breaker, Ethical Hacker, Code Fixer. 1000+ contributions, Python exploit dev, penetration testing. Music‑reactive diagonal wave background.">
+  <meta name="description" content="NodeX-AR | Aswanth R - System Breaker, Ethical Hacker, Code Fixer. 1000+ contributions, Python exploit dev, penetration testing.">
   <meta name="keywords" content="NodeX-AR, Aswanth R, ethical hacker, code fixer, penetration testing, cybersecurity, Python developer">
   <meta name="author" content="Aswanth R (NodeX-AR)">
   <meta name="robots" content="index, follow">
@@ -18,6 +18,7 @@
   <meta property="og:url" content="https://a-r.is-a.dev">
   <link rel="canonical" href="https://a-r.is-a.dev">
   
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -25,6 +26,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   
+  <!-- Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -184,7 +186,7 @@
 </div>
 
 <script>
-  // ---------- DIAGONAL WAVE VISUALIZER (REAL MUSIC REACTIVE + COLOR) ----------
+  // ---------- DIAGONAL WAVE VISUALIZER (REAL MUSIC REACTIVE) ----------
   const canvas = document.getElementById('wave-canvas');
   const ctx = canvas.getContext('2d');
   let width, height;
@@ -198,7 +200,7 @@
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
   
-  // Audio and visualizer state
+  // Audio state
   let audioContext = null;
   let analyser = null;
   let source = null;
@@ -206,19 +208,31 @@
   let isAudioActive = false;
   let freqData = new Uint8Array(128);
   let fallbackIntensity = 0;
-  let lastTimestamp = 0;
   
-  function initAudio() {
-    if (audioContext) return;
+  // Simulated beat before user interaction
+  function updateFallbackIntensity(now) {
+    const bpm = 128;
+    const period = 60 / bpm;
+    const phase = (now % period) / period;
+    let kick = Math.max(0, 1 - phase * 6) * 0.8;
+    let bass = Math.max(0, 1 - ((now % (period*0.5)) / (period*0.5)) * 4) * 0.4;
+    let raw = Math.min(1, kick + bass);
+    fallbackIntensity = fallbackIntensity * 0.85 + raw * 0.15;
+    return fallbackIntensity;
+  }
+  
+  // Start audio on first user interaction (click, touch, scroll)
+  let interactionHandled = false;
+  function startAudioOnInteraction() {
+    if (interactionHandled) return;
+    interactionHandled = true;
+    
+    // Create AudioContext and Analyser
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     analyser = audioContext.createAnalyser();
     analyser.fftSize = 256;
     freqData = new Uint8Array(analyser.frequencyBinCount);
-  }
-  
-  function startMusicOnInteraction() {
-    if (audioContext && audioContext.state === 'running') return;
-    initAudio();
+    
     audioElement = new Audio('bg.mp3');
     audioElement.loop = true;
     audioElement.crossOrigin = "anonymous";
@@ -236,34 +250,32 @@
       isAudioActive = false;
     });
     audioElement.load();
+    
     audioContext.resume().then(() => {
-      if (audioElement && audioElement.src) audioElement.play().catch(e => console.log("play blocked", e));
-    });
-    // remove listeners after first interaction
-    window.removeEventListener('click', startMusicOnInteraction);
-    window.removeEventListener('touchstart', startMusicOnInteraction);
-  }
-  window.addEventListener('click', startMusicOnInteraction);
-  window.addEventListener('touchstart', startMusicOnInteraction);
-  
-  // Fallback intensity when no real music
-  function updateFallbackIntensity(now) {
-    const bpm = 128;
-    const period = 60 / bpm;
-    const phase = (now % period) / period;
-    let kick = Math.max(0, 1 - phase * 6) * 0.8;
-    let bass = Math.max(0, 1 - ((now % (period*0.5)) / (period*0.5)) * 4) * 0.4;
-    let raw = Math.min(1, kick + bass);
-    fallbackIntensity = fallbackIntensity * 0.85 + raw * 0.15;
-    return fallbackIntensity;
+      if (audioElement && audioElement.src) {
+        audioElement.play().catch(e => console.log("play blocked (user interaction missing?)", e));
+      }
+    }).catch(e => console.log("AudioContext resume failed", e));
+    
+    // Remove all listeners after first interaction
+    window.removeEventListener('click', startAudioOnInteraction);
+    window.removeEventListener('touchstart', startAudioOnInteraction);
+    window.removeEventListener('scroll', startAudioOnInteraction);
   }
   
+  // Attach to multiple interaction types
+  window.addEventListener('click', startAudioOnInteraction);
+  window.addEventListener('touchstart', startAudioOnInteraction);
+  window.addEventListener('scroll', startAudioOnInteraction);
+  
+  // Draw waves (called every frame)
   function draw(now) {
     if (!ctx) return;
     ctx.clearRect(0, 0, width, height);
     
     let intensity = 0;
     let freqColorShift = 0;
+    
     if (isAudioActive && analyser && audioContext && audioContext.state === 'running') {
       analyser.getByteFrequencyData(freqData);
       let sum = 0;
@@ -275,18 +287,16 @@
       if (sum > 0) {
         intensity = sum / (freqData.length * 255);
         intensity = Math.min(1, intensity * 1.3);
-        // average frequency index (0 low, 1 high)
         const avgFreq = weightedSum / (sum * freqData.length);
-        freqColorShift = avgFreq; // 0..1 -> green to cyan/white
+        freqColorShift = avgFreq;
       } else {
         intensity = 0.05;
       }
     } else {
       intensity = updateFallbackIntensity(now);
-      freqColorShift = 0.3 + Math.sin(now * 2) * 0.2; // slight variation for fallback
+      freqColorShift = 0.3 + Math.sin(now * 2) * 0.2;
     }
     
-    // Amplitude controls wave height and line width
     const ampFactor = 0.3 + intensity * 1.2;
     const lineSpacing = 28;
     const waveAmp = 18 * ampFactor;
@@ -297,7 +307,6 @@
     const maxDist = Math.sqrt(width*width + height*height);
     const numLines = Math.floor(maxDist / lineSpacing) + 8;
     
-    // Color: hue shifts from 120 (green) to 180 (cyan) based on intensity + freqColorShift
     const hue = 120 + intensity * 30 + freqColorShift * 20;
     const sat = 70 + intensity * 30;
     const light = 45 + intensity * 25;
@@ -327,7 +336,6 @@
     }
     ctx.shadowBlur = 0;
     
-    // Central glow that pulses with intensity
     const glowStrength = 0.05 + intensity * 0.12;
     const grad = ctx.createRadialGradient(width/2, height/2, 30, width/2, height/2, 220);
     grad.addColorStop(0, `rgba(0, 255, 65, ${glowStrength})`);
