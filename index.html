@@ -1,697 +1,549 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Aswanth R | NodeX-AR</title>
-  <meta name="description" content="NodeX-AR | Aswanth R - Ethical Hacker, Python Developer. Bass-reactive 3D portfolio with intense scaling.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  
+  <!-- SEO Meta Tags (based on actual GitHub profile) -->
+  <title>Aswanth R | NodeX-AR </title>
+  <meta name="description" content="Aswanth R (NodeX-AR) — Python dev & ethical hacker. I deconstruct systems and edit any language. If it's code, I can fix it. Penetration testing, Python automation, exploit development.">
   <meta name="author" content="Aswanth R (NodeX-AR)">
+  <meta name="keywords" content="ethical hacker, python developer, security researcher, nodex-ar, aswanth r, penetration testing, exploit development, automation">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#050505">
   
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <!-- Google Site Verification -->
+  <meta name="google-site-verification" content="wdF0k-MYoScdAzPf5TVDV4u540VXLTKu7phhcvnCnKc" />
   
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://a-r.is-a.dev/">
+  <meta property="og:title" content="Aswanth R | NodeX-AR — Ethical Hacker & Python Dev">
+  <meta property="og:description" content="Python dev & ethical hacker. I deconstruct systems and edit any language. If it's code, I can fix it.">
+  <meta property="og:image" content="https://ui-avatars.com/api/?background=0D1117&color=00ff41&bold=true&size=512&name=ASWANTH+R">
   
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-      }
-    }
-  </script>
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://a-r.is-a.dev/">
+  <meta name="twitter:title" content="Aswanth R | NodeX-AR">
+  <meta name="twitter:description" content="Python dev & ethical hacker. If it's code, I can fix it.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23050505'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%2300ff41' font-family='monospace'%3E%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ui-avatars.com/api/?background=0D1117&color=00ff41&size=32&name=AR">
+  <link rel="apple-touch-icon" href="https://ui-avatars.com/api/?background=0D1117&color=00ff41&size=180&name=AR">
+  
+  <!-- Tailwind + Font Awesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-main: #050505;
+      --accent: #00ff41;
+      --accent-dim: rgba(0, 255, 65, 0.12);
+      --text-muted: #9ca3af;
+      --border-color: rgba(255, 255, 255, 0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
     body {
-      background: #03030c;
-      font-family: 'Inter', sans-serif;
-      color: #e0e0e0;
+      background-color: var(--bg-main);
+      color: #e5e5e5;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       overflow-x: hidden;
     }
-    #canvas-container {
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+    h1, h2, h3, .font-heading { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono, .terminal { font-family: 'JetBrains Mono', monospace; }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 0px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    
+    .bg-noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+    }
+    
+    #particle-canvas {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 0;
-    }
-    .scroll-tracker {
-      position: relative;
-      height: 300vh;
-      z-index: 1;
+      z-index: -1;
+      opacity: 0.35;
       pointer-events: none;
     }
-    .fixed-content {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90%;
-      max-width: 1000px;
-      z-index: 20;
-      text-align: center;
-      background: transparent;
-      backdrop-filter: none;
-      border: none;
-      border-radius: 0;
-      padding: 2rem;
-      pointer-events: auto;
-    }
-    .scene-layer {
+    
+    .grid-wrapper {
       position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: -2;
+      transform-style: preserve-3d;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .stagger-visualizer {
+      display: grid;
+      gap: 16px;
+      width: 100%;
+      max-width: 900px;
+      height: auto;
+      transform: rotateX(45deg) rotateZ(45deg) scale(0.9);
+      opacity: 0.2;
+    }
+    .stagger-visualizer .dot {
+      aspect-ratio: 1;
+      background-color: #1c1c1c;
+      border-radius: 3px;
+    }
+    @media (max-width: 768px) {
+      .stagger-visualizer { gap: 8px; transform: rotateX(45deg) rotateZ(45deg) scale(0.6); }
+    }
+    
+    #scroll-progress {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 0.5rem;
-      opacity: 0;
-      transition: opacity 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      height: 2px;
+      background: var(--accent);
+      width: 0%;
+      z-index: 1000;
+      box-shadow: 0 0 6px var(--accent);
     }
-    .scene-layer.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .hero-flex {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      text-align: left;
-    }
-    .profile-img {
-      width: 140px;
-      height: 140px;
+    
+    /* ========== CURSOR (exactly like amit.is-a.dev/v3) ========== */
+    .custom-cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #00ff41;
       border-radius: 50%;
-      object-fit: cover;
-      border: 2.5px solid #00ff41;
-      box-shadow: 0 0 20px rgba(0,255,65,0.3);
-      background: #0a0a0a;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s ease, height 0.2s ease, background 0.2s;
+      will-change: left, top;
+      mix-blend-mode: difference;
     }
-    .hero-content {
-      text-align: left;
-      flex: 1;
-      min-width: 260px;
+    .custom-cursor.hover {
+      width: 24px;
+      height: 24px;
+      background: #ffffff;
+      mix-blend-mode: normal;
     }
-    .badge {
-      font-size: 0.7rem;
-      letter-spacing: 4px;
-      color: #00ff41;
-      margin-bottom: 0.6rem;
-      font-weight: 500;
+    @media (max-width: 768px), (hover: none) {
+      .custom-cursor { display: none; }
+      body, body * { cursor: auto !important; }
     }
-    h1 {
-      font-size: 3.2rem;
-      font-weight: 700;
-      font-family: 'Space Grotesk', monospace;
-      line-height: 1.2;
-      margin-bottom: 1rem;
+    
+    .click-ripple {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: transparent;
+      border: 1px solid #00ff41;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9998;
+      animation: rippleAnim 0.4s ease-out forwards;
     }
-    .gradient-text {
-      background: linear-gradient(125deg, #fff, #00ff41);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
+    @keyframes rippleAnim {
+      0% { width: 0; height: 0; opacity: 1; }
+      100% { width: 40px; height: 40px; opacity: 0; }
     }
-    .desc {
-      font-size: 1rem;
-      color: #ddd;
-      margin-bottom: 1.25rem;
-      line-height: 1.4;
-    }
-    .stats-grid, .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1.25rem;
-      margin: 1.8rem auto 0;
-      width: 100%;
-    }
-    .stat-card, .skill-card {
-      background: rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(0, 255, 65, 0.35);
-      border-radius: 1.25rem;
-      padding: 1.2rem 0.8rem;
-      transition: 0.2s ease;
-      text-align: center;
-      backdrop-filter: blur(4px);
-    }
-    .stat-card:hover, .skill-card:hover {
-      border-color: #00ff41;
-      background: rgba(0, 255, 65, 0.1);
-      transform: translateY(-2px);
-    }
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #00ff41;
-      margin-bottom: 0.3rem;
-    }
-    .stat-label, .skill-title {
-      font-weight: 500;
-      letter-spacing: 1px;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      color: #ccc;
-    }
-    .skill-icon {
-      font-size: 2.2rem;
-      color: #00ff41;
-      margin-bottom: 0.6rem;
-      display: inline-block;
-    }
-    .skill-card div:last-child {
-      font-size: 0.73rem;
-      color: #ccc;
-      margin-top: 0.4rem;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      margin: 1.2rem 0 0.5rem;
-    }
-    .contact-link {
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(0, 255, 65, 0.5);
-      border-radius: 60px;
-      padding: 0.7rem 1.8rem;
-      text-decoration: none;
-      color: #e0e0e0;
+    
+    .terminal-btn {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      transition: 0.2s;
-      font-weight: 500;
+      gap: 0.5rem;
+      padding: 0.7rem 1.3rem;
+      background: #0c0c0c;
+      border: 1px solid #27272a;
+      color: #b0b0b0;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      text-decoration: none;
     }
-    .contact-link:hover {
-      background: #00ff41;
-      color: #000;
-      border-color: #00ff41;
+    .terminal-btn::before {
+      content: ">";
+      font-weight: bold;
+      margin-right: 2px;
+      color: var(--text-muted);
     }
-    .quote {
-      font-style: italic;
-      margin-top: 1.8rem;
-      font-size: 0.9rem;
-      color: #ccc;
-      border-left: 3px solid #00ff41;
-      padding-left: 1.2rem;
-      text-align: left;
-      background: rgba(0,0,0,0.3);
-      border-radius: 0 0.6rem 0.6rem 0;
-      width: fit-content;
-      max-width: 90%;
+    .terminal-btn:hover {
+      background: var(--accent);
+      color: #050505;
+      border-color: var(--accent);
+      transform: translateX(4px);
     }
-    .music-control {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      width: 52px;
-      height: 52px;
+    .terminal-btn:hover::before { color: #050505; }
+    
+    .reveal-text {
+      display: block;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1), opacity 0.6s ease;
+    }
+    .reveal-text.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .project-card {
+      background: rgba(8, 8, 8, 0.7);
+      backdrop-filter: blur(2px);
+      border: 1px solid #1e1e1e;
+      transition: border 0.25s, transform 0.25s ease;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      background: rgba(0, 255, 65, 0.02);
+    }
+    .skill-tag {
+      background: #0f0f0f;
+      border: 1px solid #262626;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      font-family: monospace;
+      transition: all 0.2s;
+    }
+    .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+    
+    #photo-container {
+      position: relative;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(0, 255, 65, 0.7);
-      color: #00ff41;
-      font-size: 1.3rem;
+      display: inline-block;
+    }
+    .data-ring {
+      position: absolute;
+      inset: -15px;
+      border: 1.5px dashed rgba(0, 255, 65, 0.3);
+      border-radius: 50%;
+      animation: spin 24s linear infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    #photo-img {
+      border-radius: 50%;
+      filter: grayscale(0.6);
+      transition: filter 0.5s, transform 0.4s;
+      object-fit: cover;
+    }
+    #photo-container:hover #photo-img {
+      filter: grayscale(0);
+      transform: scale(1.02);
+    }
+    
+    .nav-dots {
+      position: fixed;
+      right: 1.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .nav-dot {
+      width: 6px;
+      height: 6px;
+      background: #4a4a4a;
+      border-radius: 50%;
+      transition: all 0.2s;
       cursor: pointer;
-      z-index: 1001;
+    }
+    .nav-dot.active { background: var(--accent); transform: scale(1.6); box-shadow: 0 0 6px var(--accent); }
+    @media (max-width: 1024px) { .nav-dots { display: none; } }
+    
+    #back-to-top {
+      position: fixed;
+      bottom: 1.8rem;
+      right: 1.8rem;
+      width: 38px;
+      height: 38px;
+      background: #0f0f0f;
+      border: 1px solid #2a2a2a;
       display: flex;
       align-items: center;
       justify-content: center;
+      color: #aaa;
+      z-index: 50;
       transition: 0.2s;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
     }
-    .music-control:hover {
-      background: #00ff41;
-      color: #000;
-      transform: scale(1.05);
-    }
-    @media (max-width: 800px) {
-      .hero-flex { flex-direction: column; text-align: center; gap: 1.5rem; }
-      .hero-content { text-align: center; }
-      h1 { font-size: 2.3rem; }
-      .fixed-content { padding: 1.2rem; width: 94%; }
-      .scene-layer { padding: 0.5rem; }
-      .quote { text-align: center; border-left: none; border-top: 2px solid #00ff41; padding-left: 0; padding-top: 0.8rem; width: 100%; margin-top: 1.5rem; }
-      .stats-grid, .skills-grid { gap: 0.9rem; margin-top: 1.2rem; }
+    #back-to-top.visible { opacity: 1; visibility: visible; }
+    #back-to-top:hover { background: var(--accent); color: black; border-color: var(--accent); }
+    
+    .status-line {
+      font-family: 'JetBrains Mono';
+      background: #0b0b0b;
+      border-left: 3px solid var(--accent);
+      padding: 0.8rem 1rem;
+      font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
+  <div id="scroll-progress"></div>
+  <div class="custom-cursor"></div>
+  <div class="bg-noise"></div>
+  <canvas id="particle-canvas"></canvas>
+  <div class="grid-wrapper"><div class="stagger-visualizer" id="stagger-grid"></div></div>
+  <div class="nav-dots">
+    <div class="nav-dot active" data-section="hero"></div>
+    <div class="nav-dot" data-section="about"></div>
+    <div class="nav-dot" data-section="skills"></div>
+    <div class="nav-dot" data-section="projects"></div>
+    <div class="nav-dot" data-section="contact"></div>
+  </div>
+  <div id="back-to-top"><i class="fas fa-arrow-up"></i></div>
 
-<div id="canvas-container"></div>
-<div class="scroll-tracker"></div>
-
-<div class="fixed-content">
-  <div id="sceneLayerA" class="scene-layer active"></div>
-  <div id="sceneLayerB" class="scene-layer"></div>
-</div>
-
-<button id="audioControl" class="music-control" aria-label="Play/Pause music">
-  <i class="fas fa-play"></i>
-</button>
-
-<script type="module">
-  import * as THREE from 'three';
-  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-  import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-  import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-  import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-
-  // --- 3D SCENE SETUP ---
-  const container = document.getElementById('canvas-container');
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x03030c);
-  scene.fog = new THREE.FogExp2(0x03030c, 0.022);
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 1.6, 16);
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
-  container.appendChild(renderer.domElement);
-  
-  const renderScene = new RenderPass(scene, camera);
-  const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.4, 0.4, 0.85);
-  bloomPass.threshold = 0.05;
-  bloomPass.strength = 0.9;
-  const composer = new EffectComposer(renderer);
-  composer.addPass(renderScene);
-  composer.addPass(bloomPass);
-  
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.enableZoom = false;
-  controls.autoRotate = true;
-  controls.autoRotateSpeed = 0.7;
-  
-  // --- MAIN CORE: highly reactive geometric shape (scales dramatically with bass)
-  const coreGeo = new THREE.IcosahedronGeometry(1.4, 1);
-  const coreMat = new THREE.MeshStandardMaterial({ 
-    color: 0x00ff41, 
-    roughness: 0.22, 
-    metalness: 0.8, 
-    emissive: 0x00ff41, 
-    emissiveIntensity: 0.65 
-  });
-  const core = new THREE.Mesh(coreGeo, coreMat);
-  scene.add(core);
-  
-  // Wireframe cage (scales slightly)
-  const cageGeo = new THREE.IcosahedronGeometry(1.9, 1);
-  const cageMat = new THREE.MeshBasicMaterial({ color: 0xaaffaa, wireframe: true, transparent: true, opacity: 0.3 });
-  const cage = new THREE.Mesh(cageGeo, cageMat);
-  scene.add(cage);
-  
-  // --- Secondary particles: orbital ring with pulsating behavior
-  const particleCount = 130;
-  const particleGeo = new THREE.BufferGeometry();
-  const particlePositions = new Float32Array(particleCount * 3);
-  for (let i = 0; i < particleCount; i++) {
-    const angle = (i / particleCount) * Math.PI * 2;
-    particlePositions[i*3] = Math.cos(angle) * 5.2;
-    particlePositions[i*3+1] = Math.sin(angle) * 5.2;
-    particlePositions[i*3+2] = Math.sin(angle * 2) * 0.8;
-  }
-  particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-  const particleMat = new THREE.PointsMaterial({ size: 0.13, color: 0x44ff88, blending: THREE.AdditiveBlending });
-  const particlesRing = new THREE.Points(particleGeo, particleMat);
-  scene.add(particlesRing);
-  
-  // Floating ambient particles (extra)
-  const dustCount = 800;
-  const dustGeo = new THREE.BufferGeometry();
-  const dustPos = new Float32Array(dustCount * 3);
-  for (let i = 0; i < dustCount; i++) {
-    dustPos[i*3] = (Math.random() - 0.5) * 28;
-    dustPos[i*3+1] = (Math.random() - 0.5) * 18;
-    dustPos[i*3+2] = (Math.random() - 0.5) * 25 - 12;
-  }
-  dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
-  const dustMat = new THREE.PointsMaterial({ color: 0x88aaff, size: 0.05, transparent: true, opacity: 0.5 });
-  const dustField = new THREE.Points(dustGeo, dustMat);
-  scene.add(dustField);
-  
-  // Grid floor
-  const gridHelper = new THREE.GridHelper(28, 24, 0x33ff66, 0x226622);
-  gridHelper.position.y = -3.8;
-  scene.add(gridHelper);
-  
-  // Starfield background
-  const starsGeo = new THREE.BufferGeometry();
-  const starsCount = 2200;
-  const starsPos = new Float32Array(starsCount * 3);
-  for (let i = 0; i < starsCount; i++) {
-    starsPos[i*3] = (Math.random() - 0.5) * 240;
-    starsPos[i*3+1] = (Math.random() - 0.5) * 120;
-    starsPos[i*3+2] = (Math.random() - 0.5) * 90 - 45;
-  }
-  starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPos, 3));
-  const starsMat = new THREE.PointsMaterial({ color: 0xbbddff, size: 0.08, transparent: true, opacity: 0.7 });
-  const starsField = new THREE.Points(starsGeo, starsMat);
-  scene.add(starsField);
-  
-  // --- AUDIO ENGINE: BASS-DRIVEN DRAMATIC SCALING ---
-  let audioCtx = null;
-  let analyser = null;
-  let sourceNode = null;
-  let isPlaying = false;
-  let musicBuffer = null;
-  let bassSmoothing = 0.0;    // smoothed bass intensity for buttery reactivity
-  let lastIntensity = 0.25;
-  
-  function initAudioContext() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (!analyser) {
-      analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 256;
-      analyser.smoothingTimeConstant = 0.2;
-    }
-    return audioCtx;
-  }
-  
-  async function loadMusic() {
-    try {
-      const response = await fetch('bg.mp3');
-      if (!response.ok) throw new Error('not found');
-      const arrayBuffer = await response.arrayBuffer();
-      const ctx = initAudioContext();
-      musicBuffer = await ctx.decodeAudioData(arrayBuffer);
-      return true;
-    } catch (err) {
-      console.log('bg.mp3 not found - using enhanced pulse synth with lively reactivity');
-      return false;
-    }
-  }
-  
-  // Ambient synth with TREMOLO (volume modulation) to simulate rhythmic bass pulses
-  function startAmbientSynth() {
-    if (!audioCtx) initAudioContext();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    if (sourceNode && sourceNode.stop) { try { sourceNode.stop(); } catch(e) {} }
-    
-    const oscLow = audioCtx.createOscillator();
-    const oscMid = audioCtx.createOscillator();
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 380;
-    filter.Q.value = 5;
-    
-    const masterGain = audioCtx.createGain();
-    masterGain.gain.value = 0.32;
-    
-    // Tremolo LFO for volume pulsation -> strong beat-driven scaling even without mp3
-    const tremoloLFO = audioCtx.createOscillator();
-    const tremoloGain = audioCtx.createGain();
-    tremoloLFO.frequency.value = 2.15;   // 129 BPM feel
-    tremoloGain.gain.value = 0.22;
-    tremoloLFO.connect(tremoloGain);
-    tremoloGain.connect(masterGain.gain);
-    tremoloLFO.start();
-    
-    oscLow.type = 'sine';
-    oscLow.frequency.value = 68;
-    oscMid.type = 'triangle';
-    oscMid.frequency.value = 136;
-    
-    oscLow.connect(filter);
-    oscMid.connect(filter);
-    filter.connect(masterGain);
-    masterGain.connect(analyser);
-    analyser.connect(audioCtx.destination);
-    
-    oscLow.start();
-    oscMid.start();
-    
-    // Extra subtle bass modulation using LFO on filter
-    const filterLFO = audioCtx.createOscillator();
-    const filterLfoGain = audioCtx.createGain();
-    filterLFO.frequency.value = 1.8;
-    filterLfoGain.gain.value = 65;
-    filterLFO.connect(filterLfoGain);
-    filterLfoGain.connect(filter.frequency);
-    filterLFO.start();
-    
-    sourceNode = { stop: () => { oscLow.stop(); oscMid.stop(); tremoloLFO.stop(); filterLFO.stop(); } };
-    isPlaying = true;
-    document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
-  }
-  
-  async function startCustomMusic() {
-    if (!musicBuffer) {
-      const loaded = await loadMusic();
-      if (!loaded) { startAmbientSynth(); return; }
-    }
-    if (sourceNode && sourceNode.stop) sourceNode.stop();
-    if (!audioCtx) initAudioContext();
-    if (audioCtx.state === 'suspended') await audioCtx.resume();
-    const newSource = audioCtx.createBufferSource();
-    newSource.buffer = musicBuffer;
-    newSource.loop = true;
-    newSource.connect(analyser);
-    analyser.connect(audioCtx.destination);
-    newSource.start();
-    sourceNode = newSource;
-    isPlaying = true;
-    document.getElementById('audioControl').innerHTML = '<i class="fas fa-pause"></i>';
-  }
-  
-  function toggleMusic() {
-    if (!audioCtx) initAudioContext();
-    if (isPlaying) {
-      if (sourceNode && sourceNode.stop) sourceNode.stop();
-      isPlaying = false;
-      document.getElementById('audioControl').innerHTML = '<i class="fas fa-play"></i>';
-    } else {
-      if (musicBuffer) startCustomMusic();
-      else startAmbientSynth();
-    }
-    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-  }
-  
-  document.getElementById('audioControl').addEventListener('click', toggleMusic);
-  
-  // BASS-INTENSITY detection (focus on low frequencies 20-150Hz)
-  function getBassIntensity() {
-    if (!isPlaying || !analyser || !audioCtx || audioCtx.state !== 'running') {
-      // Idle gentle throbbing to show life even without music
-      return 0.28 + Math.sin(Date.now() * 0.0035) * 0.12;
-    }
-    const dataArray = new Uint8Array(analyser.frequencyBinCount);
-    analyser.getByteFrequencyData(dataArray);
-    // Use lowest ~1/4 bins (bass region)
-    const bassBins = Math.floor(dataArray.length * 0.28);
-    let sum = 0;
-    for (let i = 1; i < bassBins; i++) {
-      sum += dataArray[i];
-    }
-    let raw = sum / (bassBins * 255);
-    // aggressive curve to pop on strong bass hits
-    let intensity = Math.pow(Math.min(1.0, raw * 1.7), 1.2);
-    intensity = Math.min(0.98, Math.max(0.22, intensity));
-    // smoothing for buttery animation
-    bassSmoothing = bassSmoothing * 0.5 + intensity * 0.5;
-    return Math.min(0.98, bassSmoothing);
-  }
-  
-  // --- STRONG REACTIVITY: SCALE, GLOW, COLOR, RING ---
-  function applyAudioReactivity() {
-    const bass = getBassIntensity();
-    // Map bass to dramatic scale (1.0 → up to 1.85x)
-    const scaleFactor = 1.0 + bass * 0.88;
-    // core.scale changes drastically based on bass
-    core.scale.setScalar(scaleFactor);
-    // Cage also expands but slightly less
-    cage.scale.setScalar(1.0 + bass * 0.45);
-    
-    // Color shift: green -> intense cyan (bass makes it hotter)
-    const hue = 120 - bass * 38;   // 120° green to 82° electric cyan
-    const saturation = 0.9;
-    const lightness = 0.55 + bass * 0.35;
-    coreMat.color.setHSL(hue / 360, saturation, lightness);
-    coreMat.emissive.setHSL(hue / 360, 1.0, 0.6 + bass * 0.6);
-    coreMat.emissiveIntensity = 0.55 + bass * 1.4;
-    
-    // Bloom strength: explosive glow on drops
-    bloomPass.strength = 0.7 + bass * 1.7;
-    
-    // Particle ring size & color: intense pulsation
-    particleMat.size = 0.12 + bass * 0.22;
-    particleMat.color.setHSL(0.32 + bass * 0.12, 1.0, 0.6);
-    particlesRing.rotation.z += 0.012 + bass * 0.025;
-    
-    // Auto-rotation speed: faster with energy
-    controls.autoRotateSpeed = 0.55 + bass * 1.2;
-    
-    // Fog density floats with intensity
-    scene.fog.density = 0.018 + bass * 0.018;
-    
-    // Grid intensity via emissive look? just small additional flair
-    if (bass > 0.6) {
-      gridHelper.material.color.setHex(0x99ff99);
-    } else {
-      gridHelper.material.color.setHex(0x33ff66);
-    }
-    
-    // dust field subtle motion
-    dustField.rotation.y += 0.002;
-    dustField.rotation.x = bass * 0.1;
-    
-    // core rotation: extra twist
-    core.rotation.x += 0.005;
-    core.rotation.y += 0.007 + bass * 0.01;
-    cage.rotation.x = core.rotation.x;
-    cage.rotation.y = core.rotation.y;
-  }
-  
-  // --- SCROLL CONTENT CROSSFADE (same elegant behavior)---
-  const scenesData = [
-    { 
-      id: 'hero',
-      html: `
-        <div class="hero-flex">
-          <img src="/aswanth-r-nodex-ar.png" alt="Aswanth R" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?background=0D1117&color=00ff41&bold=true&size=140&name=ASWANTH+R'">
-          <div class="hero-content">
-            <div class="badge">ETHICAL HACKER / PYTHON DEV</div>
-            <h1>Breaking <span class="gradient-text">systems</span><br>fixing <span class="gradient-text">code</span></h1>
-            <p class="desc">ISC2 Candidate · Penetration testing · Python automation · Code fixer. 1000+ contributions.</p>
-            <div class="quote">“If it’s code, I can fix it.” — Aswanth R</div>
+  <main class="relative z-10">
+    <!-- HERO / INTRO (using actual GitHub bio) -->
+    <section id="hero" class="min-h-screen flex items-center justify-center px-6 py-20">
+      <div class="max-w-6xl mx-auto w-full">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+          <div class="flex-1 text-center md:text-left">
+            <div class="reveal-box"><h1 class="reveal-text text-5xl md:text-7xl font-bold font-heading tracking-tight"><span class="text-[var(--accent)]">Aswanth R</span></h1></div>
+            <div class="reveal-box mt-2"><p class="reveal-text text-xl md:text-2xl text-gray-300 font-mono">$> Python dev & ethical hacker</p></div>
+            <div class="reveal-box mt-5"><p class="reveal-text text-gray-400 max-w-lg mx-auto md:mx-0 leading-relaxed">I deconstruct systems and edit any language. If it's code, I can fix it. — Right now in class 12th CBSE</p></div>
+            <div class="reveal-box mt-8"><div class="reveal-text flex flex-wrap gap-4 justify-center md:justify-start">
+              <a href="#contact" class="terminal-btn">Init contact</a>
+              <a href="#projects" class="terminal-btn">Explore arsenal</a>
+            </div></div>
+            <div class="reveal-box mt-6"><div class="reveal-text status-line inline-block text-left"><i class="fas fa-terminal text-[var(--accent)] mr-2"></i> STATUS: ACTIVE // 618 contributions in last year</div></div>
+          </div>
+          <div class="flex-1 flex justify-center">
+            <div id="photo-container" class="w-60 h-60 md:w-80 md:h-80 relative">
+              <div class="data-ring"></div>
+              <img id="photo-img" src="https://ui-avatars.com/api/?background=0D1117&color=00ff41&bold=true&size=320&name=ASWANTH+R&length=2&fontsize=0.6" alt="Aswanth R" class="w-full h-full object-cover">
+            </div>
           </div>
         </div>
-      `
-    },
-    {
-      id: 'stats',
-      html: `
-        <h2 class="gradient-text" style="font-size:2rem; margin-bottom:1rem;">Impact & Metrics</h2>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-number">1,250+</div><div class="stat-label">CONTRIBUTIONS</div></div>
-          <div class="stat-card"><div class="stat-number">34+</div><div class="stat-label">ACTIVE REPOS</div></div>
-          <div class="stat-card"><div class="stat-number">58K+</div><div class="stat-label">LINES FIXED</div></div>
-          <div class="stat-card"><div class="stat-number">1.8K+</div><div class="stat-label">BREACHES PATCHED</div></div>
+      </div>
+    </section>
+
+    <!-- ABOUT / WHOAMI (from GitHub README) -->
+    <section id="about" class="py-20 px-6 border-t border-white/5">
+      <div class="max-w-5xl mx-auto">
+        <div class="reveal-box"><h2 class="reveal-text text-3xl md:text-4xl font-bold font-heading mb-3"><span class="text-[var(--accent)]">//</span> whoami</h2></div>
+        <div class="grid md:grid-cols-2 gap-10 mt-8">
+          <div class="reveal-box"><div class="reveal-text space-y-4 text-gray-300 leading-relaxed">
+            <p>I'm <span class="text-[var(--accent)] font-bold">Aswanth R (NodeX-AR)</span>, an ethical hacker and Python developer. I focus on penetration testing, security research, Python automation, and exploit development.</p>
+            <p>I also contribute to open-source and build student projects. Currently in Class 12th CBSE — balancing exams with breaking systems (ethically).</p>
+            <p>My philosophy: If it's code, I can fix it. I deconstruct systems and speak any language the machine understands.</p>
+            <div class="flex flex-wrap gap-3 mt-4">
+              <span class="skill-tag"><i class="fab fa-python"></i> Python</span>
+              <span class="skill-tag"><i class="fas fa-bug"></i> Exploit Dev</span>
+              <span class="skill-tag"><i class="fas fa-shield-haltered"></i> Pen Testing</span>
+              <span class="skill-tag"><i class="fas fa-code"></i> Automation</span>
+            </div>
+          </div></div>
+          <div class="reveal-box"><div class="reveal-text space-y-4 bg-black/20 p-5 border-l-2 border-[var(--accent)]">
+            <p class="font-mono text-sm"><i class="fas fa-quote-left text-[var(--accent)] mr-2"></i> "Security is not a product, it's a mindset. Every line of code can be a weapon or a shield."</p>
+            <div class="pt-3 text-sm text-gray-400 font-mono">$> cat philosophy.txt — break it, understand it, secure it.</div>
+          </div></div>
         </div>
-        <div class="quote" style="margin-top:1.5rem;">Every line of code tells a story of resilience & precision.</div>
-      `
-    },
-    {
-      id: 'skills',
-      html: `
-        <h2 class="gradient-text" style="font-size:2rem; margin-bottom:1rem;">Cyber Arsenal</h2>
-        <div class="skills-grid">
-          <div class="skill-card"><i class="fab fa-python skill-icon"></i><div class="skill-title">PYTHON</div><div>Advanced • Automation • Exploit Dev</div></div>
-          <div class="skill-card"><i class="fas fa-lock skill-icon"></i><div class="skill-title">ETHICAL HACKING</div><div>Pen Testing • Reverse Engineering</div></div>
-          <div class="skill-card"><i class="fas fa-globe skill-icon"></i><div class="skill-title">WEB TECH</div><div>JS/HTML/CSS • React • Node.js</div></div>
-          <div class="skill-card"><i class="fas fa-bolt skill-icon"></i><div class="skill-title">CODE FIXER</div><div>Debug • Refactor • Optimize</div></div>
+      </div>
+    </section>
+
+    <!-- SKILLS / TOOLCHAIN -->
+    <section id="skills" class="py-20 px-6 border-t border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="reveal-box"><h2 class="reveal-text text-3xl md:text-4xl font-bold font-heading mb-6 text-center"><span class="text-[var(--accent)]">⚡</span> arsenal & toolchain</h2></div>
+        <div class="reveal-box"><div class="reveal-text text-center text-gray-400 mb-10 max-w-2xl mx-auto">Python · Bash · JavaScript · Metasploit · Burp Suite · Nmap · Wireshark · Docker · Git</div></div>
+        <div class="marquee-container overflow-hidden whitespace-nowrap relative">
+          <div class="marquee-content inline-flex gap-4 animate-marquee">
+            <span class="skill-tag"><i class="fab fa-python"></i> Python 3</span>
+            <span class="skill-tag"><i class="fas fa-skull"></i> Metasploit</span>
+            <span class="skill-tag"><i class="fas fa-database"></i> SQLmap</span>
+            <span class="skill-tag"><i class="fab fa-linux"></i> Kali Linux</span>
+            <span class="skill-tag"><i class="fas fa-network-wired"></i> Wireshark</span>
+            <span class="skill-tag"><i class="fas fa-code-branch"></i> Burp Suite</span>
+            <span class="skill-tag"><i class="fab fa-docker"></i> Docker</span>
+            <span class="skill-tag"><i class="fas fa-fingerprint"></i> John the Ripper</span>
+            <span class="skill-tag"><i class="fab fa-js"></i> JavaScript</span>
+            <span class="skill-tag"><i class="fas fa-terminal"></i> Bash</span>
+          </div>
+          <div class="marquee-content inline-flex gap-4 animate-marquee">
+            <span class="skill-tag"><i class="fab fa-python"></i> Python 3</span>
+            <span class="skill-tag"><i class="fas fa-skull"></i> Metasploit</span>
+            <span class="skill-tag"><i class="fas fa-database"></i> SQLmap</span>
+            <span class="skill-tag"><i class="fab fa-linux"></i> Kali Linux</span>
+            <span class="skill-tag"><i class="fas fa-network-wired"></i> Wireshark</span>
+            <span class="skill-tag"><i class="fas fa-code-branch"></i> Burp Suite</span>
+            <span class="skill-tag"><i class="fab fa-docker"></i> Docker</span>
+            <span class="skill-tag"><i class="fas fa-fingerprint"></i> John the Ripper</span>
+            <span class="skill-tag"><i class="fab fa-js"></i> JavaScript</span>
+            <span class="skill-tag"><i class="fas fa-terminal"></i> Bash</span>
+          </div>
         </div>
-      `
-    },
-    {
-      id: 'contact',
-      html: `
-        <h2 class="gradient-text" style="font-size:2rem; margin-bottom:1rem;">Connect Securely</h2>
-        <div class="contact-links">
-          <a href="https://github.com/Nodex-AR" target="_blank" class="contact-link"><i class="fab fa-github"></i> GitHub/Nodex-AR</a>
-          <a href="#" id="secureEmailBtn" class="contact-link"><i class="fas fa-envelope"></i> Secure Message</a>
+        <style>
+          .marquee-container { mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+          .animate-marquee { animation: marqueeScroll 30s linear infinite; }
+          @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        </style>
+      </div>
+    </section>
+
+    <!-- PROJECTS (from GitHub pinned repos) -->
+    <section id="projects" class="py-20 px-6 border-t border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="reveal-box"><h2 class="reveal-text text-3xl md:text-4xl font-bold font-heading mb-12 text-center"><span class="text-[var(--accent)]">#</span> pinned repositories</h2></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
+          <div class="project-card p-6 rounded-md"><div class="flex items-center gap-3 mb-2"><i class="fas fa-graduation-cap text-[var(--accent)] text-xl"></i><h3 class="text-xl font-bold font-heading">CS-Project</h3></div><p class="text-gray-400 text-sm font-mono mb-2">LMS Project · Python</p><p class="text-gray-300">A Learning Management System built as a class 12 CS project. Manages courses, users, and assignments.</p><div class="mt-3"><a href="https://github.com/NodeX-AR/CS-Project" target="_blank" class="text-[var(--accent)] text-sm hover:underline">github.com/NodeX-AR/CS-Project →</a></div></div>
+          <div class="project-card p-6 rounded-md"><div class="flex items-center gap-3 mb-2"><i class="fas fa-robot text-[var(--accent)] text-xl"></i><h3 class="text-xl font-bold font-heading">AI-Project</h3></div><p class="text-gray-400 text-sm font-mono mb-2">AI-based SAS · Python</p><p class="text-gray-300">AI-powered Student Assistance System. Uses basic ML for query handling and automation.</p><div class="mt-3"><a href="https://github.com/NodeX-AR/AI-Project" target="_blank" class="text-[var(--accent)] text-sm hover:underline">github.com/NodeX-AR/AI-Project →</a></div></div>
+          <div class="project-card p-6 rounded-md"><div class="flex items-center gap-3 mb-2"><i class="fas fa-code text-[var(--accent)] text-xl"></i><h3 class="text-xl font-bold font-heading">Pytml</h3></div><p class="text-gray-400 text-sm font-mono mb-2">Python + HTML bridge · JavaScript</p><p class="text-gray-300">A lazy way to connect Python files to HTML — makes web integration seamless for Python devs.</p><div class="mt-3"><a href="https://github.com/NodeX-AR/Pytml" target="_blank" class="text-[var(--accent)] text-sm hover:underline">github.com/NodeX-AR/Pytml →</a></div></div>
+          <div class="project-card p-6 rounded-md"><div class="flex items-center gap-3 mb-2"><i class="fas fa-terminal text-[var(--accent)] text-xl"></i><h3 class="text-xl font-bold font-heading">cd</h3></div><p class="text-gray-400 text-sm font-mono mb-2">Misc utilities · HTML</p><p class="text-gray-300">A small experiment. 15+ recent commits — always tinkering.</p><div class="mt-3"><a href="https://github.com/NodeX-AR/cd" target="_blank" class="text-[var(--accent)] text-sm hover:underline">github.com/NodeX-AR/cd →</a></div></div>
         </div>
-        <div class="quote" style="margin-top:1.5rem;">Let’s build something unbreakable together.</div>
-      `
+        <div class="reveal-box mt-12 text-center"><div class="reveal-text"><a href="https://github.com/NodeX-AR" target="_blank" class="terminal-btn inline-flex">view all 41 repos <i class="fas fa-arrow-right ml-2"></i></a></div></div>
+      </div>
+    </section>
+
+    <!-- CONTACT & ACHIEVEMENTS (from GitHub profile) -->
+    <section id="contact" class="py-20 px-6 border-t border-white/5">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="reveal-box"><h2 class="reveal-text text-3xl md:text-4xl font-bold font-heading mb-3"><span class="text-[var(--accent)]">[</span> connect / collide <span class="text-[var(--accent)]">]</span></h2></div>
+        <div class="reveal-box"><p class="reveal-text text-gray-300 max-w-xl mx-auto mb-8">Got a project, a bug, or just want to talk security? Let's jam.</p></div>
+        <div class="flex flex-wrap justify-center gap-5 mb-8">
+          <a href="mailto:aswanthr82@gmail.com" class="terminal-btn"><i class="fas fa-envelope"></i> aswanthr82[at]gmail</a>
+          <a href="https://github.com/NodeX-AR" target="_blank" class="terminal-btn"><i class="fab fa-github"></i> github/NodeX-AR</a>
+          <a href="https://x.com/NodeX-AR" target="_blank" class="terminal-btn"><i class="fab fa-twitter"></i> @NodeX-AR</a>
+          <a href="https://linkedin.com/in/nodex-ar" target="_blank" class="terminal-btn"><i class="fab fa-linkedin"></i> in/nodex-ar</a>
+        </div>
+        <div class="reveal-box"><div class="reveal-text status-line inline-block text-left text-sm">
+          <i class="fas fa-trophy text-[var(--accent)] mr-2"></i> GitHub Achievements: Pair Extraordinaire · Pull Shark · YOLO · Galaxy Brain · Quickdraw<br>
+          <i class="fas fa-globe"> · ORCID: <a href="https://orcid.org/0009-0007-1619-374X" target="_blank" class="text-[var(--accent)]">0009-0007-1619-374X</a>
+        </div></div>
+        <div class="reveal-box mt-8"><div class="reveal-text text-gray-500 text-xs font-mono">$> echo "NodeX-AR // root@exploit" | base64  //  "If it's code, I can fix it."</div></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Cursor (exactly like amit.is-a.dev/v3)
+    const cursor = document.querySelector('.custom-cursor');
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+    
+    const interactive = document.querySelectorAll('a, .terminal-btn, .nav-dot, #back-to-top, .project-card, .skill-tag');
+    interactive.forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+    
+    document.addEventListener('click', (e) => {
+      const ripple = document.createElement('div');
+      ripple.className = 'click-ripple';
+      ripple.style.left = e.clientX + 'px';
+      ripple.style.top = e.clientY + 'px';
+      document.body.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 400);
+    });
+    
+    // Particles
+    const canvas = document.getElementById('particle-canvas');
+    let ctx = canvas.getContext('2d');
+    let particles = [];
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    function initParticles() {
+      particles = [];
+      for(let i=0;i<80;i++) particles.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, rad:Math.random()*2+0.8, vx:(Math.random()-0.5)*0.3, vy:(Math.random()-0.5)*0.3, opacity:Math.random()*0.5 });
     }
-  ];
-  
-  const layerA = document.getElementById('sceneLayerA');
-  const layerB = document.getElementById('sceneLayerB');
-  let activeLayer = 'A';
-  let currentSceneIdx = 0;
-  
-  function setSceneContent(layer, html) {
-    layer.innerHTML = html;
-    const emailBtn = layer.querySelector('#secureEmailBtn');
-    if (emailBtn) {
-      emailBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        navigator.clipboard.writeText('aswanthr82@gmail.com');
-        const btn = e.currentTarget;
-        const original = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-        setTimeout(() => btn.innerHTML = original, 1500);
-      });
-    }
-  }
-  
-  setSceneContent(layerA, scenesData[0].html);
-  layerA.classList.add('active');
-  
-  ScrollTrigger.create({
-    trigger: '.scroll-tracker',
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: 1.0,
-    onUpdate: (self) => {
-      const progress = self.progress;
-      const targetIdx = Math.min(Math.floor(progress * scenesData.length), scenesData.length - 1);
-      if (targetIdx !== currentSceneIdx) {
-        currentSceneIdx = targetIdx;
-        const activeElem = activeLayer === 'A' ? layerA : layerB;
-        const inactiveElem = activeLayer === 'A' ? layerB : layerA;
-        setSceneContent(inactiveElem, scenesData[currentSceneIdx].html);
-        gsap.to(activeElem, { duration: 0.45, opacity: 0, onComplete: () => {
-          activeElem.classList.remove('active');
-          inactiveElem.classList.add('active');
-          gsap.to(inactiveElem, { duration: 0.45, opacity: 1 });
-          activeLayer = activeLayer === 'A' ? 'B' : 'A';
-        }});
+    function drawParticles() {
+      if(!ctx) return;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let p of particles){
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.rad, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(0, 255, 65, ${p.opacity})`;
+        ctx.fill();
+        p.x += p.vx; p.y += p.vy;
+        if(p.x<0) p.x=canvas.width; if(p.x>canvas.width) p.x=0;
+        if(p.y<0) p.y=canvas.height; if(p.y>canvas.height) p.y=0;
       }
-      starsField.rotation.y = progress * 0.6;
-      dustField.rotation.z = progress * 0.3;
+      requestAnimationFrame(drawParticles);
     }
-  });
-  
-  // --- GLOBAL ANIMATION LOOP: MUSIC REACTIVITY + RENDER ---
-  function animate() {
-    requestAnimationFrame(animate);
-    applyAudioReactivity();
-    controls.update(); // updates auto-rotate if enabled
-    composer.render();
-  }
-  animate();
-  
-  // Auto-start on first user interaction to comply with browser policies + ensure audio plays
-  window.addEventListener('click', async () => {
-    if (!audioCtx) {
-      initAudioContext();
-      await loadMusic();
-      if (musicBuffer) startCustomMusic();
-      else startAmbientSynth();
-    } else if (audioCtx.state === 'suspended' && !isPlaying) {
-      audioCtx.resume();
-      if (musicBuffer) startCustomMusic();
-      else startAmbientSynth();
-    }
-  }, { once: true });
-  
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    composer.setSize(window.innerWidth, window.innerHeight);
-  });
-  
-  // Additional indicator: if bg.mp3 is present, show subtle console message but user sees dramatic scaling anyway
-  console.log('🎧 Audio-reactive 3D | Bass drives core scaling up to 1.85x!');
-</script>
+    window.addEventListener('resize', ()=>{ resizeCanvas(); initParticles(); });
+    resizeCanvas(); initParticles(); drawParticles();
+    
+    // 3D grid
+    const gridContainer = document.getElementById('stagger-grid');
+    for(let i=0;i<64;i++){ let d=document.createElement('div'); d.className='dot'; gridContainer.appendChild(d); }
+    anime({
+      targets: '.dot',
+      translateZ: ()=>anime.random(-55,55),
+      translateX: ()=>anime.random(-25,25),
+      translateY: ()=>anime.random(-25,25),
+      rotate: ()=>anime.random(0,360),
+      duration: 2200,
+      delay: anime.stagger(40, { grid: [8,8], from:'center' }),
+      loop: true,
+      direction: 'alternate',
+      easing: 'easeInOutQuad'
+    });
+    
+    // Scroll progress + nav
+    window.addEventListener('scroll', () => {
+      const winScroll = window.scrollY;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = (winScroll/height)*100;
+      document.getElementById('scroll-progress').style.width = scrolled+'%';
+      const sections = document.querySelectorAll('section');
+      let current = '';
+      sections.forEach(sec => { if(winScroll >= sec.offsetTop-200) current = sec.id; });
+      document.querySelectorAll('.nav-dot').forEach(dot => {
+        dot.classList.remove('active');
+        if(dot.getAttribute('data-section') === current) dot.classList.add('active');
+      });
+      const backTop = document.getElementById('back-to-top');
+      if(winScroll > 550) backTop.classList.add('visible'); else backTop.classList.remove('visible');
+    });
+    
+    const revealItems = document.querySelectorAll('.reveal-text');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealItems.forEach(el => observer.observe(el));
+    
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+      dot.addEventListener('click', ()=>{
+        const targetId = dot.getAttribute('data-section');
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    document.getElementById('back-to-top').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+    
+    document.querySelectorAll('.terminal-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e)=>{
+        const rect = btn.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width/2)*0.2;
+        const y = (e.clientY - rect.top - rect.height/2)*0.2;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      btn.addEventListener('mouseleave', ()=> btn.style.transform = 'translate(0px, 0px)');
+    });
+  </script>
 </body>
 </html>
