@@ -1,150 +1,353 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Aswanth R (NodeX-AR)</title>
-    <meta name="description" content="About Aswanth R (NodeX-AR) - Class 12 student, Ethical Hacker, Python Developer, and ISC2 Candidate based in Trivandrum, Kerala.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://a-r.is-a.dev/about">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
-            line-height: 1.6;
-            padding: 40px 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #111;
-            border: 1px solid #00ff41;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
-        }
-
-        h1 {
-            color: #00ff41;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .tagline {
-            color: #00ff41;
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #333;
-            font-family: 'Courier New', monospace;
-        }
-
-        h2 {
-            color: #00ff41;
-            font-size: 1.5rem;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-family: 'Courier New', monospace;
-        }
-
-        p {
-            margin-bottom: 15px;
-        }
-
-        ul {
-            margin-left: 20px;
-            margin-bottom: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        a {
-            color: #00ff41;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .links {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 30px 0;
-        }
-
-        .links a {
-            display: inline-block;
-            margin-right: 15px;
-            margin-bottom: 10px;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-        }
-
-        hr {
-            border-color: #333;
-            margin: 20px 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Aswanth R | NodeX-AR — About</title>
+  <meta name="description" content="About Aswanth R (NodeX-AR) — Ethical Hacker, Python Developer, ISC2 Candidate. Class 12 student from Trivandrum, Kerala. Portfolio, certifications, projects.">
+  <meta name="author" content="Aswanth R (NodeX-AR)">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://a-r.is-a.dev/about">
+  
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Aswanth R | NodeX-AR — About">
+  <meta property="og:description" content="Ethical Hacker, Python Developer, ISC2 Candidate. Class 12 student from Trivandrum, Kerala.">
+  <meta property="og:image" content="https://a-r.is-a.dev/aswanth-r-nodex-ar.png">
+  <meta property="og:url" content="https://a-r.is-a.dev/about">
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="NodeX-AR">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aswanth R | NodeX-AR — About">
+  <meta name="twitter:description" content="Ethical Hacker, Python Developer, ISC2 Candidate.">
+  <meta name="twitter:image" content="https://a-r.is-a.dev/aswanth-r-nodex-ar.png">
+  
+  <!-- Favicons (same as main site) -->
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #050505;
+      color: #e5e5e5;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+    h1, h2, h3, .font-heading {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00ff41; }
+    
+    /* Glow effect */
+    .glow-text {
+      text-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+    }
+    .border-glow {
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .border-glow:hover {
+      border-color: #00ff41;
+      box-shadow: 0 0 12px rgba(0, 255, 65, 0.2);
+    }
+    
+    /* Terminal button style */
+    .terminal-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      background: #0c0c0c;
+      border: 1px solid #27272a;
+      color: #b0b0b0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .terminal-link::before {
+      content: ">";
+      font-weight: bold;
+      color: #00ff41;
+    }
+    .terminal-link:hover {
+      background: #00ff41;
+      color: #050505;
+      border-color: #00ff41;
+      transform: translateX(4px);
+    }
+    .terminal-link:hover::before {
+      color: #050505;
+    }
+    
+    /* Skill tags */
+    .skill-tag {
+      background: rgba(0, 255, 65, 0.05);
+      border: 1px solid rgba(0, 255, 65, 0.2);
+      padding: 0.3rem 0.9rem;
+      font-size: 0.8rem;
+      font-family: monospace;
+      transition: all 0.2s;
+    }
+    .skill-tag:hover {
+      border-color: #00ff41;
+      color: #00ff41;
+      background: rgba(0, 255, 65, 0.1);
+    }
+    
+    /* Certification card */
+    .cert-card {
+      background: rgba(10, 10, 10, 0.6);
+      border: 1px solid #1e1e1e;
+      border-radius: 16px;
+      transition: all 0.25s;
+    }
+    .cert-card:hover {
+      border-color: #00ff41;
+      transform: translateY(-3px);
+    }
+    
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Back to top */
+    #back-to-top {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 42px;
+      height: 42px;
+      background: #0f0f0f;
+      border: 1px solid #2a2a2a;
+      color: #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 100;
+      transition: 0.2s;
+      opacity: 0;
+      visibility: hidden;
+    }
+    #back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    #back-to-top:hover {
+      background: #00ff41;
+      color: black;
+      border-color: #00ff41;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Aswanth R</h1>
-        <div class="tagline">Ethical Hacker & Python Developer | Class 12 Student | ISC2 Candidate</div>
+<body class="antialiased">
 
-        <p><strong>Also known as NodeX-AR.</strong> Based in Trivandrum, Kerala, India.</p>
-
-        <p>I am a <strong>Class 12 student</strong> at Jyothis Central School and an aspiring <strong>Ethical Hacker</strong>. I hold an <strong>ISC2 Candidate</strong> certification and specialize in Python development, penetration testing, and code fixing.</p>
-
-        <h2>🔧 What I Do</h2>
-        <ul>
-            <li>Python development & automation</li>
-            <li>Penetration testing & vulnerability assessment</li>
-            <li>Code fixing & debugging (any language)</li>
-            <li>Open-source contributions</li>
-        </ul>
-
-        <h2>📚 Current Project</h2>
-        <p><strong>Library Management System</strong> – A Python desktop application built as my CBSE Class 12 Computer Science project.</p>
-
-        <h2>🌐 Find Me Online</h2>
-        <div class="links">
-            <a href="https://a-r.is-a.dev">🏠 Terminal Portfolio</a><br>
-            <a href="https://github.com/NodeX-AR">🐙 GitHub</a><br>
-            <a href="https://linkedin.com/in/nodex-ar">🔗 LinkedIn</a><br>
-            <a href="https://reddit.com/u/NodeX-AR">📖 Reddit</a><br>
-            <a href="https://stackoverflow.com/users/32759099/aswanth-r">📚 Stack Overflow</a><br>
-            <a href="https://about.me/aswanthr">📄 About.me</a><br>
-            <a href="https://wikidata.org/wiki/Q139892046">📊 Wikidata</a>
-        </div>
-
-        <h2>📜 Certifications</h2>
-        <ul>
-            <li>ISC2 Candidate (Issued May 2026)</li>
-        </ul>
-
-        <hr>
-
-        <p><strong>📧 Email:</strong> aswanthr82@gmail.com</p>
-
-        <a href="https://a-r.is-a.dev" class="back-link">← Back to Terminal</a>
+  <!-- Navigation bar (consistent with main site) -->
+  <nav class="fixed top-0 left-0 w-full z-50 bg-black/70 backdrop-blur-md border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
+      <a href="/" class="font-mono text-xl font-bold tracking-tighter"><span class="text-[#00ff41]">&lt;</span>NodeX-AR<span class="text-[#00ff41]">/&gt;</span></a>
+      <div class="hidden md:flex space-x-6 font-mono text-sm">
+        <a href="/" class="hover:text-[#00ff41] transition-colors">Home</a>
+        <a href="/about" class="text-[#00ff41] border-b border-[#00ff41] pb-0.5">About</a>
+        <a href="#contact" class="hover:text-[#00ff41] transition-colors">Contact</a>
+      </div>
+      <a href="https://github.com/NodeX-AR" target="_blank" class="text-gray-400 hover:text-[#00ff41] text-xl"><i class="fab fa-github"></i></a>
     </div>
+  </nav>
+
+  <main class="pt-24 pb-16 px-6 max-w-5xl mx-auto">
+    
+    <!-- Hero / Profile header -->
+    <div class="flex flex-col md:flex-row items-center gap-10 mb-16 reveal">
+      <div class="relative">
+        <div class="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-[#00ff41] shadow-[0_0_20px_rgba(0,255,65,0.3)]">
+          <img src="/aswanth-r-nodex-ar.png" alt="Aswanth R" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?background=0D1117&color=00ff41&bold=true&size=200&name=ASWANTH+R'">
+        </div>
+        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/70 backdrop-blur px-3 py-1 rounded-full text-xs font-mono text-[#00ff41] border border-[#00ff41]/30 whitespace-nowrap">NodeX-AR</div>
+      </div>
+      <div class="text-center md:text-left">
+        <h1 class="text-4xl md:text-5xl font-bold font-heading tracking-tight">Aswanth <span class="text-[#00ff41]">R</span></h1>
+        <div class="font-mono text-[#00ff41] text-lg mt-1">Ethical Hacker & Python Developer</div>
+        <div class="flex flex-wrap gap-3 justify-center md:justify-start mt-4">
+          <span class="skill-tag"><i class="fas fa-certificate"></i> ISC2 Candidate</span>
+          <span class="skill-tag"><i class="fas fa-bug"></i> Pen Testing</span>
+          <span class="skill-tag"><i class="fab fa-python"></i> Python Automation</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bio / About -->
+    <section class="mb-16 reveal">
+      <h2 class="text-2xl font-bold font-heading mb-4 inline-block border-l-4 border-[#00ff41] pl-3">// whoami</h2>
+      <div class="space-y-4 text-gray-300 leading-relaxed mt-4">
+        <p>I'm <strong class="text-white">Aswanth R (NodeX-AR)</strong>, a Class 12 student from Trivandrum, Kerala, and an aspiring <strong class="text-[#00ff41]">Ethical Hacker</strong>. I hold the <strong>ISC2 Candidate</strong> designation and have completed cybersecurity training from Cisco and ADBI.</p>
+        <p>I deconstruct systems to find vulnerabilities, write Python automation, and fix broken code — any language, any problem. My goal is to bridge offensive security and software engineering.</p>
+        <p>Currently building my presence through open‑source projects, certifications, and a professional portfolio. I believe in learning by breaking things — then making them stronger.</p>
+        <div class="bg-black/30 p-4 rounded-lg border-l-2 border-[#00ff41] font-mono text-sm mt-4">
+          <i class="fas fa-quote-left text-[#00ff41] mr-2"></i> If it's code, I can fix it.
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills & Toolchain -->
+    <section class="mb-16 reveal">
+      <h2 class="text-2xl font-bold font-heading mb-4 inline-block border-l-4 border-[#00ff41] pl-3">// arsenal</h2>
+      <div class="flex flex-wrap gap-2 mt-6">
+        <span class="skill-tag"><i class="fab fa-python"></i> Python</span>
+        <span class="skill-tag"><i class="fas fa-terminal"></i> Bash / Linux</span>
+        <span class="skill-tag"><i class="fas fa-shield-alt"></i> Kali / Wireshark</span>
+        <span class="skill-tag"><i class="fab fa-js"></i> JavaScript</span>
+        <span class="skill-tag"><i class="fab fa-html5"></i> HTML/CSS</span>
+        <span class="skill-tag"><i class="fas fa-database"></i> SQL</span>
+        <span class="skill-tag"><i class="fab fa-git-alt"></i> Git / GitHub</span>
+        <span class="skill-tag"><i class="fas fa-laptop-code"></i> Web Dev</span>
+        <span class="skill-tag"><i class="fas fa-map-marked-alt"></i> Burp Suite</span>
+        <span class="skill-tag"><i class="fas fa-fingerprint"></i> Reconnaissance</span>
+      </div>
+    </section>
+
+    <!-- Certifications / Credentials -->
+    <section class="mb-16 reveal">
+      <h2 class="text-2xl font-bold font-heading mb-4 inline-block border-l-4 border-[#00ff41] pl-3">// credentials</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+        <div class="cert-card p-5 text-center">
+          <i class="fas fa-certificate text-4xl text-[#00ff41] mb-2"></i>
+          <h3 class="font-bold text-lg">ISC2 Candidate</h3>
+          <p class="text-gray-400 text-sm">Issued May 2026</p>
+          <a href="https://www.credly.com/badges/2ae5eec9-8ad1-4aff-b85d-d7d49b77d409/public_url" target="_blank" class="text-[#00ff41] text-xs hover:underline mt-2 inline-block">Verify →</a>
+        </div>
+        <div class="cert-card p-5 text-center">
+          <i class="fab fa-cisco text-4xl text-[#00ff41] mb-2"></i>
+          <h3 class="font-bold text-lg">Cisco Ethical Hacker</h3>
+          <p class="text-gray-400 text-sm">Certificate of Completion</p>
+        </div>
+        <div class="cert-card p-5 text-center">
+          <i class="fas fa-shield-alt text-4xl text-[#00ff41] mb-2"></i>
+          <h3 class="font-bold text-lg">ADBI Cybersecurity</h3>
+          <p class="text-gray-400 text-sm">Asian Development Bank Institute</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Projects (brief) -->
+    <section class="mb-16 reveal">
+      <h2 class="text-2xl font-bold font-heading mb-4 inline-block border-l-4 border-[#00ff41] pl-3">// featured work</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6">
+        <div class="bg-black/30 p-5 rounded-lg border border-white/5 hover:border-[#00ff41]/40 transition">
+          <i class="fab fa-python text-3xl text-[#00ff41] mb-2"></i>
+          <h3 class="text-xl font-bold">Library Management System</h3>
+          <p class="text-gray-400 text-sm mt-1">Python + Tkinter + SQLite – CBSE Class 12 CS project</p>
+          <a href="https://github.com/NodeX-AR/CS-Project" target="_blank" class="terminal-link mt-3 inline-block text-sm">GitHub</a>
+        </div>
+        <div class="bg-black/30 p-5 rounded-lg border border-white/5 hover:border-[#00ff41]/40 transition">
+          <i class="fas fa-robot text-3xl text-[#00ff41] mb-2"></i>
+          <h3 class="text-xl font-bold">AI‑Based SAS System</h3>
+          <p class="text-gray-400 text-sm mt-1">Class 12 AI project (Code 843) – Smart Attendance</p>
+          <a href="https://github.com/NodeX-AR/AI-Project" target="_blank" class="terminal-link mt-3 inline-block text-sm">GitHub</a>
+        </div>
+      </div>
+      <div class="mt-5 text-center">
+        <a href="https://github.com/NodeX-AR" target="_blank" class="terminal-link">view all repositories →</a>
+      </div>
+    </section>
+
+    <!-- Contact / Links -->
+    <section id="contact" class="reveal">
+      <h2 class="text-2xl font-bold font-heading mb-4 inline-block border-l-4 border-[#00ff41] pl-3">// connect</h2>
+      <div class="mt-6 flex flex-wrap gap-4 justify-center md:justify-start">
+        <a href="mailto:aswanthr82@gmail.com" class="terminal-link"><i class="fas fa-envelope"></i> aswanthr82@gmail.com</a>
+        <a href="https://github.com/NodeX-AR" target="_blank" class="terminal-link"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://linkedin.com/in/nodex-ar" target="_blank" class="terminal-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="https://reddit.com/u/NodeX-AR" target="_blank" class="terminal-link"><i class="fab fa-reddit"></i> Reddit</a>
+        <a href="https://stackoverflow.com/users/32759099/aswanth-r" target="_blank" class="terminal-link"><i class="fab fa-stack-overflow"></i> Stack Overflow</a>
+        <a href="https://orcid.org/0009-0007-1619-374X" target="_blank" class="terminal-link"><i class="fab fa-orcid"></i> ORCID</a>
+      </div>
+      <div class="mt-8 text-center text-gray-500 text-sm font-mono">
+        <i class="fas fa-map-marker-alt text-[#00ff41]"></i> Trivandrum, Kerala, India
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-center text-gray-500 text-xs py-8 border-t border-white/5 mt-10 font-mono">
+    <p>© 2026 Aswanth R (NodeX-AR) — // about page</p>
+  </footer>
+
+  <button id="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Back to top button
+    const backBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) backBtn.classList.add('visible');
+      else backBtn.classList.remove('visible');
+    });
+    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Smooth scroll for internal anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href').substring(1);
+        if (targetId === 'contact') {
+          e.preventDefault();
+          document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
