@@ -94,8 +94,9 @@
       pointer-events: none;
     }
     
+    /* ===== REPLACED GRID BACKGROUND (exact matrix stagger) ===== */
     .grid-wrapper {
-      position: absolute;
+      position: fixed;
       inset: 0;
       display: flex;
       justify-content: center;
@@ -109,19 +110,30 @@
       display: grid;
       gap: 16px;
       width: 100%;
-      max-width: 900px;
+      max-width: 750px;
       height: auto;
-      transform: rotateX(45deg) rotateZ(45deg) scale(0.9);
+      transform: rotateX(45deg) rotateZ(45deg);
+      transform-style: preserve-3d;
       opacity: 0.2;
     }
     .stagger-visualizer .dot {
+      position: relative;
+      width: 100%;
       aspect-ratio: 1;
-      background-color: #1c1c1c;
-      border-radius: 3px;
+      background-color: #27272a;
+      border-radius: 4px;
+      will-change: transform;
     }
     @media (max-width: 768px) {
-      .stagger-visualizer { gap: 8px; transform: rotateX(45deg) rotateZ(45deg) scale(0.6); }
+      .stagger-visualizer {
+        gap: 8px;
+        transform: rotateX(45deg) rotateZ(45deg) scale(0.8);
+      }
+      .stagger-visualizer .dot {
+        border-radius: 2px;
+      }
     }
+    /* ======================================================== */
     
     #scroll-progress {
       position: fixed;
@@ -316,7 +328,12 @@
   <div class="custom-cursor"></div>
   <div class="bg-noise"></div>
   <canvas id="particle-canvas"></canvas>
-  <div class="grid-wrapper"><div class="stagger-visualizer" id="stagger-grid"></div></div>
+  
+  <!-- NEW GRID WRAPPER - exact stagger animation -->
+  <div class="grid-wrapper">
+    <div class="stagger-visualizer" id="stagger-grid"></div>
+  </div>
+  
   <div class="nav-dots">
     <div class="nav-dot active" data-section="hero"></div>
     <div class="nav-dot" data-section="about"></div>
@@ -441,7 +458,7 @@
         </div>
         <div class="reveal-box"><div class="reveal-text status-line inline-block text-left text-sm">
           <i class="fas fa-trophy text-[var(--accent)] mr-2"></i> GitHub Achievements: Pair Extraordinaire · Pull Shark · YOLO · Galaxy Brain · Quickdraw<br>
-          <i class="fas fa-globe"> · ORCID: <a href="https://orcid.org/0009-0007-1619-374X" target="_blank" class="text-[var(--accent)]">0009-0007-1619-374X</a>
+          <i class="fas fa-globe"></i> ORCID: <a href="https://orcid.org/0009-0007-1619-374X" target="_blank" class="text-[var(--accent)]">0009-0007-1619-374X</a>
         </div></div>
         <div class="reveal-box mt-8"><div class="reveal-text text-gray-500 text-xs font-mono">$> echo "NodeX-AR // root@exploit" | base64  //  "If it's code, I can fix it."</div></div>
       </div>
@@ -449,7 +466,7 @@
   </main>
 
   <script>
-    // Cursor (exactly like amit.is-a.dev/v3)
+    // ========== 1. CURSOR (unchanged) ==========
     const cursor = document.querySelector('.custom-cursor');
     let mouseX = 0, mouseY = 0;
     document.addEventListener('mousemove', (e) => {
@@ -474,7 +491,7 @@
       setTimeout(() => ripple.remove(), 400);
     });
     
-    // Particles
+    // ========== 2. PARTICLE BACKGROUND (unchanged) ==========
     const canvas = document.getElementById('particle-canvas');
     let ctx = canvas.getContext('2d');
     let particles = [];
@@ -500,23 +517,121 @@
     window.addEventListener('resize', ()=>{ resizeCanvas(); initParticles(); });
     resizeCanvas(); initParticles(); drawParticles();
     
-    // 3D grid
-    const gridContainer = document.getElementById('stagger-grid');
-    for(let i=0;i<64;i++){ let d=document.createElement('div'); d.className='dot'; gridContainer.appendChild(d); }
-    anime({
-      targets: '.dot',
-      translateZ: ()=>anime.random(-55,55),
-      translateX: ()=>anime.random(-25,25),
-      translateY: ()=>anime.random(-25,25),
-      rotate: ()=>anime.random(0,360),
-      duration: 2200,
-      delay: anime.stagger(40, { grid: [8,8], from:'center' }),
-      loop: true,
-      direction: 'alternate',
-      easing: 'easeInOutQuad'
-    });
+    // ========== 3. REPLACED GRID ANIMATION (exact matrix stagger) ==========
+    let currentAnimation = null;
+    function initMatrixGrid() {
+      const container = document.getElementById('stagger-grid');
+      if (!container) return;
+      // clear old grid
+      container.innerHTML = '';
+      
+      const isMobile = window.innerWidth < 768;
+      const cols = isMobile ? 5 : 10;
+      const rows = isMobile ? 5 : 10;
+      const totalDots = cols * rows;
+      
+      container.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+      
+      // create dots
+      for (let i = 0; i < totalDots; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        container.appendChild(dot);
+      }
+      
+      // kill previous timeline if exists
+      if (currentAnimation && typeof currentAnimation.seek === 'function') {
+        currentAnimation.pause();
+        currentAnimation = null;
+      }
+      
+      // build timeline – exactly as in the original reference
+      const timeline = anime.timeline({
+        targets: '.stagger-visualizer .dot',
+        easing: 'easeInOutSine',
+        delay: anime.stagger(50),
+        loop: true,
+        autoplay: true
+      });
+      
+      timeline
+        .add({
+          translateX: [
+            {
+              value: anime.stagger('-.5rem', {
+                grid: [cols, rows],
+                from: 'center',
+                axis: 'x'
+              })
+            },
+            {
+              value: anime.stagger('.5rem', {
+                grid: [cols, rows],
+                from: 'center',
+                axis: 'x'
+              })
+            }
+          ],
+          translateY: [
+            {
+              value: anime.stagger('-.5rem', {
+                grid: [cols, rows],
+                from: 'center',
+                axis: 'y'
+              })
+            },
+            {
+              value: anime.stagger('.5rem', {
+                grid: [cols, rows],
+                from: 'center',
+                axis: 'y'
+              })
+            }
+          ],
+          duration: 1000,
+          scale: 0.5,
+          delay: anime.stagger(100, {
+            grid: [cols, rows],
+            from: 'center'
+          })
+        })
+        .add({
+          translateX: () => anime.random(-10, 10),
+          translateY: () => anime.random(-10, 10),
+          delay: anime.stagger(8, { from: 'last' }),
+          scale: 1,
+          backgroundColor: '#00ff41',   // lime accent
+          duration: 1000
+        })
+        .add({
+          translateX: 0,
+          translateY: 0,
+          scale: 1,
+          backgroundColor: '#27272a',
+          duration: 1000,
+          delay: anime.stagger(100, {
+            grid: [cols, rows],
+            from: 'center'
+          })
+        });
+      
+      currentAnimation = timeline;
+    }
     
-    // Scroll progress + nav
+    // initial grid build
+    initMatrixGrid();
+    
+    // rebuild on resize to keep grid dimensions correct (no full page reload)
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        initMatrixGrid();
+      }, 200);
+    });
+    // ========== END OF REPLACED GRID ==========
+    
+    // ========== 4. SCROLL PROGRESS & NAV (unchanged) ==========
     window.addEventListener('scroll', () => {
       const winScroll = window.scrollY;
       const height = document.documentElement.scrollHeight - window.innerHeight;
