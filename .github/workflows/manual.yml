@@ -1,0 +1,94 @@
+name: Update Quote & Sitemap
+
+on:
+  schedule:
+    # Runs every day at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  update-quote-and-sitemap:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Select random quote
+        id: select_quote
+        run: |
+          # Read quotes.txt into an array, removing empty lines
+          mapfile -t QUOTES < <(grep -v '^$' quotes.txt)
+          
+          # Get the total number of quotes
+          TOTAL=${#QUOTES[@]}
+          
+          # Generate random index
+          RANDOM_INDEX=$((RANDOM % TOTAL))
+          
+          # Get the selected quote
+          SELECTED_QUOTE="${QUOTES[$RANDOM_INDEX]}"
+          
+          # Export for next steps
+          echo "quote=$SELECTED_QUOTE" >> $GITHUB_OUTPUT
+          echo "Selected quote: $SELECTED_QUOTE"
+      
+      - name: Update HTML with new quote
+        run: |
+          python3 << 'EOF'
+          import re
+          
+          quote = """${{ steps.select_quote.outputs.quote }}"""
+          
+          with open('index.html', 'r', encoding='utf-8') as f:
+              content = f.read()
+          
+          # Find and replace the quote text inside the <p> tag
+          pattern = r'(<p class="font-mono text-sm"><i class="fas fa-quote-left text-\[var\(--accent\)\] mr-2"></i> )"[^"]*"(</p>)'
+          replacement = r'\1"' + quote + r'"\2'
+          
+          new_content = re.sub(pattern, replacement, content)
+          
+          with open('index.html', 'w', encoding='utf-8') as f:
+              f.write(new_content)
+          
+          print(f"Updated quote to: {quote}")
+          EOF
+      
+      - name: Get current date
+        id: date
+        run: echo "today=$(date -u +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+      
+      - name: Update sitemap.xml with current date
+        run: |
+          TODAY="${{ steps.date.outputs.today }}"
+          
+          # Update all lastmod entries in sitemap.xml to today's date
+          sed -i "s|<lastmod>[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}</lastmod>|<lastmod>$TODAY</lastmod>|g" sitemap.xml
+          
+          echo "Updated sitemap.xml with date: $TODAY"
+      
+      - name: Verify changes
+        run: |
+          echo "=== Updated quote in index.html ==="
+          grep -A1 "fa-quote-left" index.html | head -2
+          echo ""
+          echo "=== Updated dates in sitemap.xml (first 5) ==="
+          grep -m5 "<lastmod>" sitemap.xml
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          git add index.html sitemap.xml
+          
+          if git diff --cached --quiet; then
+            echo "No changes detected"
+          else
+            git commit -m "🤖 chore: Update daily quote and sitemap lastmod ($(date -u +'%Y-%m-%d'))"
+            git push
+            echo "Changes pushed successfully"
+          fi
