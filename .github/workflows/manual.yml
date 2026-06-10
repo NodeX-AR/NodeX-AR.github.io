@@ -88,7 +88,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes detected"
           else
-            git commit -m "🤖 chore: Update daily quote and sitemap lastmod ($(date -u +'%Y-%m-%d'))"
+            git commit -m "Update daily quote and sitemap lastmod ($(date -u +'%Y-%m-%d'))"
             git push
             echo "Changes pushed successfully"
           fi
