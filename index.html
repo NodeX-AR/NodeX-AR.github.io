@@ -50,77 +50,123 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   
-  <script type="application/ld+json">
+ <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "WebSite",
+      "@id": "https://a-r.is-a.dev/#website",
+      "url": "https://a-r.is-a.dev/",
+      "name": "Aswanth R | NodeX-AR",
+      "description": "Portfolio of Aswanth R (NodeX-AR), an ethical hacker and Python developer.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://www.google.com/search?kgmid=/g/11njz95dg2" },
+      "author": { "@id": "https://www.google.com/search?kgmid=/g/11njz95dg2" },
+      "creator": { "@id": "https://www.google.com/search?kgmid=/g/11njz95dg2" },
+      "about": { "@id": "https://www.google.com/search?kgmid=/g/11njz95dg2" },
+      "mainEntity": { "@id": "https://www.google.com/search?kgmid=/g/11njz95dg2" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://www.google.com/search?kgmid=/g/11njz95dg2",
+      "url": "https://a-r.is-a.dev/",
+      "name": "Aswanth R",
+      "givenName": "Aswanth",
+      "familyName": "R",
+      "alternateName": "NodeX-AR",
+      "identifier": [
         {
-          "@type": ["WebSite", "ProfilePage"],
-          "@id": "https://orcid.org/0009-0007-1619-374X",
-          "url": "https://a-r.is-a.dev/",
-          "name": "Aswanth R",
-          "alternateName": "NodeX-AR",
-          "description": "Portfolio of Aswanth R (NodeX-AR), an ethical hacker and Python developer.",
-          "inLanguage": "en",
-          "publisher": { "@id": "https://a-r.is-a.dev/#person" },
-          "about": { "@id": "https://a-r.is-a.dev/#person" },
-          "mainEntity": { "@id": "https://a-r.is-a.dev/#person" }
+          "@type": "PropertyValue",
+          "propertyID": "ORCID",
+          "value": "0009-0007-1619-374X",
+          "url": "https://orcid.org/0009-0007-1619-374X"
         },
         {
-          "@type": "Person",
-          "@id": "https://a-r.is-a.dev/#person",
-          "name": "Aswanth R",
-          "givenName": "Aswanth",
-          "familyName": "R",
-          "alternateName": "NodeX-AR",
-          "url": "https://a-r.is-a.dev/",
-          "image": {
-            "@type": "ImageObject",
-            "url": "https://a-r.is-a.dev/aswanth-r-nodex-ar.png"
-          },
-          "description": "Ethical hacker and Python developer. I deconstruct systems and edit any language. If it's code, I can fix it.",
-          "jobTitle": "Ethical Hacker & Python Developer",
-          "gender": "Male",
-          "email": "aswanthr82@gmail.com",
-          "nationality": { "@type": "Country", "name": "India" },
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Trivandrum",
-            "addressRegion": "Kerala",
-            "addressCountry": "IN"
-          },
-          "knowsAbout": [
-            { "@type": "Thing", "name": "Cybersecurity" },
-            { "@type": "Thing", "name": "Python Programming" },
-            { "@type": "Thing", "name": "Penetration Testing" },
-            { "@type": "Thing", "name": "Open Source" }
-          ],
-          "knowsLanguage": [
-            { "@type": "Language", "name": "English" },
-            { "@type": "Language", "name": "Malayalam" },
-            { "@type": "ComputerLanguage", "name": "Python" },
-            { "@type": "ComputerLanguage", "name": "JavaScript" },
-            { "@type": "ComputerLanguage", "name": "Bash" }
-          ],
-          "hasCredential": [
-            {
-              "@type": "EducationalOccupationalCredential",
-              "name": "ISC2 Candidate",
-              "credentialCategory": "Certification",
-              "recognizedBy": { "@type": "Organization", "name": "ISC2" }
-            }
-          ],
-          "alumniOf": { "@type": "HighSchool", "name": "Jyothis Central School" },
-          "sameAs": [
-            "https://github.com/NodeX-AR",
-            "https://orcid.org/0009-0007-1619-374X",
-            "https://about.me/aswanthr",
-            "https://www.google.com/search?kgmid=/g/11njz95dg2"
-          ]
+          "@type": "PropertyValue",
+          "propertyID": "GoogleKnowledgeGraph",
+          "value": "/g/11njz95dg2",
+          "url": "https://www.google.com/search?kgmid=/g/11njz95dg2"
         }
-      ]
+      ],
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://a-r.is-a.dev/aswanth-r-nodex-ar.png"
+      },
+      "description": "Ethical hacker and Python developer. I deconstruct systems and edit any language. If it's code, I can fix it.",
+      "jobTitle": "Ethical Hacker & Python Developer",
+      "gender": "Male",
+      "email": "aswanthr82@gmail.com",
+      "nationality": {
+        "@type": "Country",
+        "name": "India"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Trivandrum",
+        "addressRegion": "Kerala",
+        "addressCountry": "IN"
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Jyothis Central School",
+        "sameAs": "https://jyothiscentralschool.org/teams"
+      },
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "ISC2 Candidate",
+          "credentialCategory": "Certification",
+          "recognizedBy": {
+            "@type": "Organization",
+            "name": "ISC2"
+          }
+        }
+      ],
+      "knowsAbout": [
+        {
+          "@type": "DefinedTerm",
+          "name": "Cybersecurity",
+          "sameAs": "https://en.wikipedia.org/wiki/Computer_security"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Python Programming",
+          "sameAs": "https://en.wikipedia.org/wiki/Python_(programming_language)"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Penetration Testing",
+          "sameAs": "https://en.wikipedia.org/wiki/Penetration_test"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Open Source",
+          "sameAs": "https://en.wikipedia.org/wiki/Open-source_software"
+        }
+      ],
+      "knowsLanguage": [
+        "English",
+        "Malayalam",
+        "Python",
+        "JavaScript",
+        "Bash"
+      ],
+      "sameAs": [
+        "https://github.com/NodeX-AR",
+        "https://orcid.org/0009-0007-1619-374X",
+        "https://about.me/aswanthr",
+        "https://www.google.com/search?kgmid=/g/11njz95dg2",
+        "https://dev.to/nodex-ar",
+        "https://devpost.com/aswanthr82"
+      ],
+      "mainEntityOfPage": {
+        "@id": "https://a-r.is-a.dev/#website"
+      }
     }
-  </script>
+  ]
+}
+</script>
 
   
   <style>
