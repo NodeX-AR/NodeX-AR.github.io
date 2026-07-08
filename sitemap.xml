@@ -8,7 +8,7 @@
   <!-- ========== MAIN HOMEPAGE (HIGHEST PRIORITY) ========== -->
   <url>
     <loc>https://a-r.is-a.dev/</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -25,42 +25,42 @@
   <!-- ========== FAVICON FILES (HIGH PRIORITY FOR GOOGLE) ========== -->
   <url>
     <loc>https://a-r.is-a.dev/favicon-48x48.png</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
     <loc>https://a-r.is-a.dev/favicon-32x32.png</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://a-r.is-a.dev/favicon-16x16.png</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://a-r.is-a.dev/favicon.ico</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://a-r.is-a.dev/apple-touch-icon.png</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://a-r.is-a.dev/site.webmanifest</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -68,7 +68,7 @@
   <!-- ========== ABOUT PAGE (MEDIUM-HIGH PRIORITY) ========== -->
   <url>
     <loc>https://a-r.is-a.dev/about</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -76,7 +76,7 @@
   <!-- ========== PERSONAL PHOTO (STANDALONE ENTRY) ========== -->
   <url>
     <loc>https://a-r.is-a.dev/aswanth-r-nodex-ar.jpg</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -84,7 +84,7 @@
   <!-- ========== HEADER SVG (BRANDING) ========== -->
   <url>
     <loc>https://a-r.is-a.dev/header.svg</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
