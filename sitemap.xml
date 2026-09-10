@@ -8,7 +8,7 @@
   <!-- ========== MAIN HOMEPAGE ========== -->
   <url>
     <loc>https://a-r.is-a.dev/</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -25,7 +25,7 @@
   <!-- ========== ABOUT PAGE ========== -->
   <url>
     <loc>https://a-r.is-a.dev/about</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
